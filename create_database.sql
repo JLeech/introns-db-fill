@@ -1,4 +1,4 @@
-USE sub_test
+USE test
 DROP TABLE IF EXISTS introns;
 DROP TABLE IF EXISTS exons;
 DROP TABLE IF EXISTS isoforms;
