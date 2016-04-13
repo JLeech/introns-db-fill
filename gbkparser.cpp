@@ -236,9 +236,10 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
             const bool dayValid = 1 <= day && day <= 31;
             const bool monthValid = 1 <= month && month <= 12;
             const bool yearValid = 1970 <= year && year <= 2039;
-            qDebug() << year << " -- " << month << " -- " << day;
             if (dayValid && monthValid && yearValid) {
                 seq->gbk_date.setDate(year, month, day);
+            }else{
+                qDebug() << "DATA problems: " << year << "-" << month << "-" << day;        
             }
         }
         qDebug() << "... " << seq->refSeqId
