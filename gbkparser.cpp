@@ -221,8 +221,9 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
         const QStringList words = value.split(QRegExp("\\s+"));
         seq->refSeqId = words[0];
         seq->length = words[1].toUInt();
-        seq->gbk_date = words[6];
-        qDebug() << "date: " << seq->gbk_date;
+        //seq->gbk_date = words[6];
+        //qDebug() << "date: " << seq->gbk_date;
+        qDebug() << "date: " << words[6];
         qDebug() << "... " << seq->refSeqId
                  << " from " << _fileName
                  << " by worker " << QThread::currentThreadId();
