@@ -609,7 +609,7 @@ void Database::addSequence(SequencePtr sequence)
     query.bindValue(":description", sequence->description);
     query.bindValue(":lengthh", sequence->length);
     query.bindValue(":id_organisms", organismId);
-    query.bindValue(":gbk_date",sequence->gbk_date)
+    query.bindValue(":gbk_date",sequence->gbk_date);
     qint32 chromosomeId = 0;
     if (sequence->chromosome) {
         ChromosomePtr chr = sequence->chromosome.toStrongRef();
