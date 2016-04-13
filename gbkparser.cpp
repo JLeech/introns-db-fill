@@ -221,9 +221,26 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
         const QStringList words = value.split(QRegExp("\\s+"));
         seq->refSeqId = words[0];
         seq->length = words[1].toUInt();
-        //seq->gbk_date = words[6];
-        //qDebug() << "date: " << seq->gbk_date;
-        qDebug() << "date: " << words[6];
+        static QRegExp rxDate("(\\d+)-(\\S+)-(\\d\\d\\d\\d)");
+        int position = rxDate.indexIn(words[6]);
+        if (-1 != position) {
+            int day = rxDate.cap(1).toInt();
+            int year = rxDate.cap(3).toInt();
+            const QString monthString = rxDate.cap(2).toLower().left(3);
+            static const QStringList Months = QStringList()
+                    << "jan" << "feb" << "mar"
+                    << "apr" << "may" << "jun"
+                    << "jul" << "aug" << "sep"
+                    << "oct" << "nov" << "dec";
+            int month = 1 + Months.indexOf(monthString);
+            const bool dayValid = 1 <= day && day <= 31;
+            const bool monthValid = 1 <= month && month <= 12;
+            const bool yearValid = 1970 <= year && year <= 2039;
+            qDebug() << year << " -- " << month << " -- " << day;
+            if (dayValid && monthValid && yearValid) {
+                seq->gbk_date.setDate(year, month, day);
+            }
+        }
         qDebug() << "... " << seq->refSeqId
                  << " from " << _fileName
                  << " by worker " << QThread::currentThreadId();
