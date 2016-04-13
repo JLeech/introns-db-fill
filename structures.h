@@ -165,6 +165,7 @@ struct Sequence {
     ChromosomeWPtr  chromosome;
     QString         originFileName;
     QByteArray      origin;
+    QDate           gbk_date;
 
     QList<GenePtr>  genes;
 };
