@@ -136,7 +136,8 @@ CREATE TABLE sequences(
     lengthh INT NOT NULL DEFAULT 0,
     id_organisms INT NOT NULL,
     id_chromosomes INT,
-    origin_file_name VARCHAR(100)
+    origin_file_name VARCHAR(100),
+    gbk_date DATE
 );
 
 

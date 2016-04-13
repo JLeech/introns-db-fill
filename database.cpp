@@ -591,6 +591,7 @@ void Database::addSequence(SequencePtr sequence)
                           ", id_organisms"
                           ", id_chromosomes"
                           ", origin_file_name"
+                          ", gbk_date"
                           ") VALUES("
                           ":file_name"
                           ", :refseq_id"
@@ -600,6 +601,7 @@ void Database::addSequence(SequencePtr sequence)
                           ", :id_organisms"
                           ", :id_chromosomes"
                           ", :origin_file_name"
+                          ", :gbk_date"
                           ")");
     query.bindValue(":source_file_name", sequence->sourceFileName);
     query.bindValue(":refseq_id", sequence->refSeqId);
@@ -607,6 +609,7 @@ void Database::addSequence(SequencePtr sequence)
     query.bindValue(":description", sequence->description);
     query.bindValue(":lengthh", sequence->length);
     query.bindValue(":id_organisms", organismId);
+    query.bindValue(":gbk_date",sequence->gbk_date)
     qint32 chromosomeId = 0;
     if (sequence->chromosome) {
         ChromosomePtr chr = sequence->chromosome.toStrongRef();
