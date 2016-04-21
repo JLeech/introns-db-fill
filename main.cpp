@@ -26,7 +26,7 @@ struct Arguments {
 
     QStringList sourceFileNames;    // positional parameters
     QString extraDataFile;  // --use-data=...
-    QString dataFolder
+    QString dataFolder;
 
     QString loggerFileName; // --logfile=...
 };
@@ -65,7 +65,7 @@ Arguments parseArguments()
             result.loggerFileName = arg.mid(10);
         }
         else if (!arg.startsWith("-")) {
-            qDebug() << "FILE : " << result.extraDataFile.substr(0, result.extraDataFile.size()-1);;
+            qDebug() << "FILE : " << result.extraDataFile.remove(QRegExp(".bio"));
             result.sourceFileNames.push_back(arg);
         }
     }
