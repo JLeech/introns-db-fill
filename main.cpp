@@ -65,7 +65,7 @@ Arguments parseArguments()
             result.loggerFileName = arg.mid(10);
         }
         else if (!arg.startsWith("-")) {
-            qDebug() << "FILE : " << arg.extraDataFile.substr(0, arg.extraDataFile.size()-1);;
+            qDebug() << "FILE : " << result.extraDataFile.substr(0, result.extraDataFile.size()-1);;
             result.sourceFileNames.push_back(arg);
         }
     }
