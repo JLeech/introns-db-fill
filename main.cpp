@@ -129,7 +129,8 @@ void Worker::run()
     _semaphore.acquire();
     const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii();
     qDebug() << "decompress_command: \n" << _args.dataFolder.toAscii();
-    system (decompress_command);
+    const char* ddecompress_command = "gzip -d " + _args.dataFolder.toAscii();
+    system (ddecompress_command);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
