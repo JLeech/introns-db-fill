@@ -127,7 +127,7 @@ void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
     _semaphore.acquire();
-    const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii().data();
+    const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii();
     qDebug() << "decompress_command : " << decompress_command;
     system (decompress_command);
     sleep(2);
