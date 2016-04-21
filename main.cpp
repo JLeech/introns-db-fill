@@ -140,6 +140,7 @@ void Worker::run()
                  << " by worker " << QThread::currentThreadId();
     }
     const char* compress_command = "gzip " + _args.dataFolder.toAscii();
+    qDebug() << "decompress_command 2 : " << decompress_command;
     system (compress_command);
     qDebug() << "Finished thread " << QThread::currentThreadId();
 }
