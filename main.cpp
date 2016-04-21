@@ -127,10 +127,10 @@ void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
     _semaphore.acquire();
-    const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii();
-    qDebug() << "decompress_command: \n" << _args.dataFolder.toAscii();
-    const char* ddecompress_command = "gzip -d " + _args.dataFolder.toAscii();
-    system (ddecompress_command);
+    const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii().data();
+    qDebug() << "decompress_command : " << decompress_command;
+    system (decompress_command);
+    sleep(2);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
