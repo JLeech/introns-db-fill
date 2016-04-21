@@ -449,7 +449,7 @@ TaxGroup2Ptr Database::findOrCreateTaxGroup2(const QString &name, const QString 
     }
 
     QSqlQuery selectQuery("", *_db);
-    selectQuery.prepare("SELECT * FROM tax_groups1 WHERE name=:name AND typee=:typee");
+    selectQuery.prepare("SELECT * FROM tax_groups2 WHERE name=:name AND typee=:typee");
     selectQuery.bindValue(":name", name);
     selectQuery.bindValue(":typee", type);
     if (!selectQuery.exec()) {
