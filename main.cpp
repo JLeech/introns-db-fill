@@ -128,7 +128,7 @@ void Worker::run()
     qDebug() << "Created thread " << QThread::currentThreadId();
     _semaphore.acquire();
     sleep(2);
-    const char* decompress_command = "0123456789123456 "
+    const char* decompress_command = "0123456789123456";
     sleep(2);
     qDebug() << "decompress_command : " << decompress_command;
     sleep(2);
