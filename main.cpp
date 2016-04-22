@@ -67,6 +67,7 @@ Arguments parseArguments()
         }
         else if (!arg.startsWith("-")) {
             result.dataFolder = result.extraDataFile.remove(QRegExp(".bio")) + "/*";
+            arg = arg.remove(QRegExp(".gz"));
             result.sourceFileNames.push_back(arg);
         }
     }
@@ -131,7 +132,6 @@ void Worker::run()
     std::string decompress_command = "gzip -d " + _args.dataFolder.toStdString();
     qDebug() << "decompress_command : " << decompress_command.c_str();
     system (decompress_command.c_str());
-    sleep(10);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
