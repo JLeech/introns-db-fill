@@ -132,8 +132,8 @@ void Worker::run()
     std::string gzip_d = "gzip -d ";
     const char* decompress_command = (gzip_d + _args.dataFolder.toStdString()).c_str();
     qDebug() << "decompress_command : " << decompress_command;
-    sleep(20);
     int finish = system (decompress_command);
+    sleep(10);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
