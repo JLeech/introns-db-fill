@@ -67,7 +67,7 @@ Arguments parseArguments()
         }
         else if (!arg.startsWith("-")) {
             QString tmp_arg = result.extraDataFile;
-            result.dataFolder = tmp_arg.extraDataFile.remove(QRegExp(".bio")) + "/*";
+            result.dataFolder = tmp_arg.remove(QRegExp(".bio")) + "/*";
             tmp_arg = arg;
             QString file_name = tmp_arg.remove(QRegExp(".gz"));
             result.sourceFileNames.push_back(file_name);
