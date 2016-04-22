@@ -127,13 +127,10 @@ Worker::Worker(const Arguments &args, int from, int to)
 void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
-    _semaphore.acquire();
-    sleep(2);
-    std::string gzip_d = "gzip -d ";
-    const char* decompress_command = (gzip_d + _args.dataFolder.toStdString()).c_str();
+    //_semaphore.acquire();
+    const char* decompress_command = "gzip -d " + _args.dataFolder.toAscii();
     qDebug() << "decompress_command : " << decompress_command;
-    int finish = system (decompress_command);
-    sleep(10);
+    system (decompress_command);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
