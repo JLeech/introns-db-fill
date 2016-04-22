@@ -67,7 +67,7 @@ Arguments parseArguments()
         }
         else if (!arg.startsWith("-")) {
             result.dataFolder = result.extraDataFile.remove(QRegExp(".bio")) + "/*";
-            Qstring file_name = arg.remove(QRegExp(".gz"));
+            QString file_name = arg.remove(QRegExp(".gz"));
             result.sourceFileNames.push_back(file_name);
         }
     }
