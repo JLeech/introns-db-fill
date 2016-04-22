@@ -3,7 +3,6 @@
 #include "gbkparser.h"
 #include "gzipreader.h"
 #include "logger.h"
-#include "string"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -128,12 +127,12 @@ void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
     _semaphore.acquire();
-    std::string data_folder = _args.dataFolder.toAscii();
+    QString data_folder = _args.dataFolder;
     sleep(2);
-    std::string decompress_command = "gzip -d " + data_folder;
+    const char* decompress_command = "gzip -d " + data_folder.toAscii();
     qDebug() << "decompress_command : " << decompress_command;
     sleep(2);
-    system (decompress_command.c_str());
+    system (decompress_command);
         
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
