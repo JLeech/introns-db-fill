@@ -66,8 +66,9 @@ Arguments parseArguments()
             result.loggerFileName = arg.mid(10);
         }
         else if (!arg.startsWith("-")) {
-            result.dataFolder = result.extraDataFile.remove(QRegExp(".bio")) + "/*";
-            QString tmp_arg = arg;
+            QString tmp_arg = result.extraDataFile;
+            result.dataFolder = tmp_arg.extraDataFile.remove(QRegExp(".bio")) + "/*";
+            tmp_arg = arg;
             QString file_name = tmp_arg.remove(QRegExp(".gz"));
             result.sourceFileNames.push_back(file_name);
         }
@@ -129,9 +130,8 @@ Worker::Worker(const Arguments &args, int from, int to)
 void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
-    //_semaphore.acquire();
+    _semaphore.acquire();
     std::string decompress_command = "gzip -d " + _args.dataFolder.toStdString();
-    qDebug() << "decompress_command : " << decompress_command.c_str();
     system (decompress_command.c_str());
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
