@@ -133,8 +133,7 @@ void Worker::run()
     const char* decompress_command = (gzip_d + _args.dataFolder.toStdString()).c_str();
     //qDebug() << "decompress_command : " << decompress_command;
     //sleep(2);
-    system (decompress_command);
-        
+    int finish = system (decompress_command);
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
@@ -144,7 +143,7 @@ void Worker::run()
                  << " by worker " << QThread::currentThreadId();
     }
     const char* compress_command = "gzip " + _args.dataFolder.toAscii();
-    //system (compress_command);
+    finish = system (compress_command);
     qDebug() << "Finished thread " << QThread::currentThreadId();
 }
 
