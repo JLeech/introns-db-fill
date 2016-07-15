@@ -268,7 +268,7 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
                 }
             }
         }
-        exit();
+        exit(0);
     }
     //DEFINITION  Homo sapiens chromosome 10 genomic scaffold, GRCh38.p2 Primary
     else if ("DEFINITION" == prefix) {
