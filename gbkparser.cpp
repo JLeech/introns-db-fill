@@ -217,6 +217,7 @@ IsoformPtr GbkParser::findRnaIsoformContainingLocation(
 
 void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr seq)
 {
+    //LOCUS       NT_008705           39626682 bp    DNA     linear   CON 12-MAR-2015
     if ("LOCUS" == prefix) {
         const QStringList words = value.split(QRegExp("\\s+"));
         seq->refSeqId = words[0];
@@ -250,6 +251,7 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
                  << " from " << _fileName
                  << " by worker " << QThread::currentThreadId();
     }
+    //ORGANISM  Homo sapiens
     else if ("ORGANISM" == prefix) {
         const QStringList lines = value.split('\n', QString::SkipEmptyParts);
         const QString name = _overrideOrganismName.isEmpty()
@@ -266,17 +268,22 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
                 }
             }
         }
+        exit();
     }
+    //DEFINITION  Homo sapiens chromosome 10 genomic scaffold, GRCh38.p2 Primary
     else if ("DEFINITION" == prefix) {
         seq->description = value.replace('\n', ' ').simplified();
     }
+    //VERSION     NT_008705.17  GI:568815281
     else if ("VERSION" == prefix) {
         seq->version = value.replace('\n', ' ').simplified();
     }
+    //FEATURES             Location/Qualifiers
     else if ("FEATURES" == prefix) {
         _state = State::Features;
         _featureStartLineNo = _currentLineNo;
     }
+    //ORIGIN      
     else if ("ORIGIN" == prefix) {
         _state = State::Origin;
     }

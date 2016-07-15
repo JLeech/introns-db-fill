@@ -116,7 +116,7 @@ OrganismPtr Database::findOrCreateOrganism(const QString &name)
             organism->realChromosomeCount = organismRecord.field("real_chromosome_count").value().toInt();
             organism->dbChromosomeCount = organismRecord.field("db_chromosome_count").value().toInt();
             organism->realMitochondria = organismRecord.field("real_mitichondria").value().toBool();
-            organism->dbMitochondria = organismRecord.field("db_mitichondria").value().toBool();
+            organism->dbMitochondria = organismRecord.field("db_mitochondria").value().toBool();
             organism->unknownSequencesCount = organismRecord.field("unknown_sequences_count").value().toInt();
             organism->totalSequencesLength = organismRecord.field("total_sequences_length").value().toInt();
             organism->bGenesCount = organismRecord.field("b_genes_count").value().toInt();
