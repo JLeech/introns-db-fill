@@ -1012,10 +1012,11 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    Q_FOREACH(ExonPtr exon, isoform->exons) {
-        addCodingExon(exon);
-    }
-    //addExons(isoform);
+    addExons(isoform);
+    // Q_FOREACH(ExonPtr exon, isoform->exons) {
+    //     addCodingExon(exon);
+    // }
+    
     // Q_FOREACH(IntronPtr intron, isoform->introns) {
     //     addIntron(intron);
     // }
@@ -1106,22 +1107,22 @@ void Database::addExons(IsoformPtr isoform)
         error_n_in_sequence_list   <<  exon->errorNInSequence ;
     }
 
-     query.addBindValue(":id_isoforms", id_isoforms_list);
-     query.addBindValue(":id_genes", id_genes_list);
-     query.addBindValue(":id_sequences", id_sequences_list);
-     query.addBindValue(":startt", startt_list);
-     query.addBindValue(":endd", endd_list);
-     query.addBindValue(":lengthh", lengthh_list);
-     query.addBindValue(":typee", typee_list);
-     query.addBindValue(":start_phase", start_phase_list);
-     query.addBindValue(":end_phase", end_phase_list);
-     query.addBindValue(":length_phase", length_phase_list);
-     query.addBindValue(":indexx", indexx_list);
-     query.addBindValue(":rev_index", rev_index_list);
-     query.addBindValue(":start_codon", start_codon_list);
-     query.addBindValue(":end_codon", end_codon_list);
-     query.addBindValue(":error_in_pseudo_flag", error_in_pseudo_flag_list);
-     query.addBindValue(":error_n_in_sequence", error_n_in_sequence_list);
+     query.bindValue(":id_isoforms", id_isoforms_list);
+     query.bindValue(":id_genes", id_genes_list);
+     query.bindValue(":id_sequences", id_sequences_list);
+     query.bindValue(":startt", startt_list);
+     query.bindValue(":endd", endd_list);
+     query.bindValue(":lengthh", lengthh_list);
+     query.bindValue(":typee", typee_list);
+     query.bindValue(":start_phase", start_phase_list);
+     query.bindValue(":end_phase", end_phase_list);
+     query.bindValue(":length_phase", length_phase_list);
+     query.bindValue(":indexx", indexx_list);
+     query.bindValue(":rev_index", rev_index_list);
+     query.bindValue(":start_codon", start_codon_list);
+     query.bindValue(":end_codon", end_codon_list);
+     query.bindValue(":error_in_pseudo_flag", error_in_pseudo_flag_list);
+     query.bindValue(":error_n_in_sequence", error_n_in_sequence_list);
 
     if (!query.execBatch()) {
         qWarning() << query.lastError();
@@ -1188,7 +1189,6 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":end_codon", exon->endCodon);
     query.bindValue(":error_in_pseudo_flag", exon->errorInPseudoFlag);
     query.bindValue(":error_n_in_sequence", exon->errorNInSequence);
-
 
     if (!query.exec()) {
         qWarning() << query.lastError();
