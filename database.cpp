@@ -622,7 +622,7 @@ void Database::addSequence(SequencePtr sequence)
 
     if (!query.exec()) {
         qWarning() << sequence->originFileName;
-	qWarning() << query.lastError();
+	    qWarning() << query.lastError();
         qWarning() << query.lastError().text();
         qWarning() << query.lastQuery();
         return;
@@ -902,7 +902,7 @@ void Database::addGene(GenePtr gene)
     }
 
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
-        addIsoform(isoform);
+        //addIsoform(isoform);
     }
 
 }

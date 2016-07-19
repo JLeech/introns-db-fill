@@ -80,7 +80,6 @@ SequencePtr GbkParser::readSequence()
             }
         }
         else if (State::Features == _state) {
-            exit(0);
             const QString prefix =
                     currentLine.length() > 21
                     ? currentLine.left(21).trimmed()
