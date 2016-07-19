@@ -902,93 +902,8 @@ void Database::addGene(GenePtr gene)
     }
 
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
-        //addIsoform(isoform);
-        saveIsoform(isoform);
+        addIsoform(isoform);
     }
-
-}
-
-void Database::saveIsoform(IsoformPtr isoform)
-{
-    const qint32 geneId = isoform->gene.toStrongRef()->id;
-    isoform->exonsLength = 0;
-    Q_FOREACH(ExonPtr exon, isoform->exons) {
-        // coordinates include both borders in GBK
-        quint32 exonLength = (qint64)exon->end - (qint64)exon->start + 1;
-        if (!exon->origin.isEmpty()) {
-            const QByteArray & origin = exon->origin;
-            const quint32 originSize = origin.length();
-            Q_ASSERT(exonLength == originSize);
-        }
-        isoform->exonsLength += exonLength;
-    }
-    isoform->errorInLength = 0 != (isoform->exonsLength % 3);
-    isoform->errorMain = isoform->errorMain || isoform->errorInLength;
-
-    QString isoform_data = QString::number(geneId)+","+
-        QString::numbers(isoform->sequence.toStrongRef()->id) + "," +
-        isoform->proteinXref+ "," +
-        isoform->proteinId + "," +
-        isoform->product + "," +
-        isoform->errorMain ? isoform->note : "";
-
-
-    //query.bindValue(":id_genes", geneId);
-    //query.bindValue(":id_sequences", isoform->sequence.toStrongRef()->id);
-    //query.bindValue(":protein_xref", isoform->proteinXref);
-    //query.bindValue(":protein_id", isoform->proteinId);
-    //query.bindValue(":product", isoform->product);
-    // query.bindValue(":note", isoform->errorMain ? isoform->note : "");
-    // query.bindValue(":cds_start", UINT32_MAX == isoform->cdsStart ? 0 : isoform->cdsStart);
-    // query.bindValue(":cds_end", isoform->cdsEnd);
-    // query.bindValue(":mrna_start", UINT32_MAX == isoform->mrnaStart ? 0 : isoform->mrnaStart);
-    // query.bindValue(":mrna_end", isoform->mrnaEnd);
-    // query.bindValue(":mrna_length",
-    //                 isoform->mrnaEnd == 0 || UINT32_MAX == isoform->mrnaStart
-    //                 ? 0 : qint32(isoform->mrnaEnd) - qint32(isoform->mrnaStart) + 1);
-    // query.bindValue(":exons_cds_count", isoform->exonsCdsCount);
-    // query.bindValue(":exons_mrna_count", isoform->exonsMrnaCount);
-    // query.bindValue(":exons_length", isoform->exonsLength);
-    // query.bindValue(":start_codon", isoform->startCodon);
-    // query.bindValue(":end_codon", isoform->endCodon);
-    // query.bindValue(":maximum_by_introns", isoform->isMaximumByIntrons);
-
-    // query.bindValue(":error_in_length", isoform->errorInLength);
-    // query.bindValue(":error_in_start_codon", isoform->errorInStartCodon);
-    // query.bindValue(":error_in_end_codon", isoform->errorInEndCodon);
-    // query.bindValue(":error_in_intron", isoform->errorInIntron);
-    // query.bindValue(":error_in_coding_exon", isoform->errorInCodingExon);
-    // query.bindValue(":error_main", isoform->errorMain);    
-
-
-    // id_genes INT NOT NULL,
-    // id_sequences INT NOT NULL,
-    // protein_xref VARCHAR(40),
-    // protein_id VARCHAR(100),
-    // product VARCHAR(250),
-    // note TEXT,
-    // cds_start INT,
-    // cds_end INT,
-    // mrna_start INT,
-    // mrna_end INT,
-    // mrna_length INT,
-    // exons_cds_count INT,
-    // exons_mrna_count INT,
-    // exons_length INT,
-    // start_codon VARCHAR(3),
-    // end_codon VARCHAR(3),
-    // maximum_by_introns BOOLEAN,
-
-    // error_in_length BOOLEAN NOT NULL DEFAULT 0,
-    // error_in_start_codon BOOLEAN NOT NULL DEFAULT 0,
-    // error_in_end_codon BOOLEAN NOT NULL DEFAULT 0,
-    // error_in_intron BOOLEAN NOT NULL DEFAULT 0,
-    // error_in_coding_exon BOOLEAN NOT NULL DEFAULT 0,
-    // error_main BOOLEAN NOT NULL DEFAULT 0,
-    // error_comment TEXT
-
-    // int myInt = 0;
-    // QString text = "someString" + QString::number( myInt ); // CORRECT
 
 }
 
@@ -1097,18 +1012,122 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    Q_FOREACH(ExonPtr exon, isoform->exons) {
-        addCodingExon(exon);
-    }
-
+    // Q_FOREACH(ExonPtr exon, isoform->exons) {
+    //     addCodingExon(exon);
+    // }
+    addExons(isoform);
     Q_FOREACH(IntronPtr intron, isoform->introns) {
         addIntron(intron);
     }
 
+    // Q_FOREACH(ExonPtr exon, isoform->exons) {
+    //     updateNeigbourIntronsIds(exon);
+    // }
+
+}
+
+void Database::addExons(IsoformPtr isoform){
+    
+    const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
+    const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
+    const qint32 isoformId = exon->isoform.toStrongRef()->id;
+
+    QSqlQuery query("", *_db);
+    query.prepare("INSERT INTO exons("
+                  "id_isoforms"
+                  ", id_genes"
+                  ", id_sequences"
+                  ", startt"
+                  ", endd"
+                  ", lengthh"
+                  ", typee"
+                  ", start_phase"
+                  ", end_phase"
+                  ", length_phase"
+                  ", indexx"
+                  ", rev_index"
+                  ", start_codon"
+                  ", end_codon"
+                  ", error_in_pseudo_flag"
+                  ", error_n_in_sequence"
+                  ") VALUES("
+                  ":id_isoforms"
+                  ", :id_genes"
+                  ", :id_sequences"
+                  ", :startt"
+                  ", :endd"
+                  ", :lengthh"
+                  ", :typee"
+                  ", :start_phase"
+                  ", :end_phase"
+                  ", :length_phase"
+                  ", :indexx"
+                  ", :rev_index"
+                  ", :start_codon"
+                  ", :end_codon"
+                  ", :error_in_pseudo_flag"
+                  ", :error_n_in_sequence"
+                  ")");
+    
+    QVariantList id_isoforms_list;
+    QVariantList id_genes_list;
+    QVariantList id_sequences_list;
+    QVariantList startt_list;
+    QVariantList endd_list;
+    QVariantList lengthh_list;
+    QVariantList typee_list;
+    QVariantList start_phase_list;
+    QVariantList end_phase_list;
+    QVariantList length_phase_list;
+    QVariantList indexx_list;
+    QVariantList rev_index_list;
+    QVariantList start_codon_list;
+    QVariantList end_codon_list;
+    QVariantList error_in_pseudo_flag_list;
+    QVariantList error_n_in_sequence_list;
+
     Q_FOREACH(ExonPtr exon, isoform->exons) {
-        updateNeigbourIntronsIds(exon);
+        id_isoforms_list <<   isoformId;
+        id_genes_list <<   geneId;
+        id_sequences_list <<   seqId;
+        startt_list <<   exon->start;
+        endd_list <<   exon->end;
+        lengthh_list <<   exon->end - exon->start + 1;
+        typee_list <<   qint16(exon->type);
+        start_phase_list <<   exon->startPhase;
+        end_phase_list <<   exon->endPhase;
+        length_phase_list <<   exon->lengthPhase;
+        indexx_list <<   exon->index;
+        rev_index_list <<   exon->revIndex;
+        start_codon_list <<   exon->startCodon;
+        end_codon_list <<   exon->endCodon;
+        error_in_pseudo_flag_list <<   exon->errorInPseudoFlag;
+        error_n_in_sequence_list   <<  exon->errorNInSequence ;
     }
 
+     q.addBindValue(id_isoforms_list);
+     q.addBindValue(id_genes_list);
+     q.addBindValue(id_sequences_list);
+     q.addBindValue(startt_list);
+     q.addBindValue(endd_list);
+     q.addBindValue(lengthh_list);
+     q.addBindValue(typee_list);
+     q.addBindValue(start_phase_list);
+     q.addBindValue(end_phase_list);
+     q.addBindValue(length_phase_list);
+     q.addBindValue(indexx_list);
+     q.addBindValue(rev_index_list);
+     q.addBindValue(start_codon_list);
+     q.addBindValue(end_codon_list);
+     q.addBindValue(error_in_pseudo_flag_list);
+     q.addBindValue(error_n_in_sequence_list);
+
+    if (!query.execBatch()) {
+        qWarning() << query.lastError();
+        qWarning() << query.lastError().text();
+        qWarning() << query.lastQuery();
+        return;
+    }
 }
 
 void Database::addCodingExon(ExonPtr exon)
