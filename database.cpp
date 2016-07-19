@@ -1012,10 +1012,10 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    // Q_FOREACH(ExonPtr exon, isoform->exons) {
-    //     addCodingExon(exon);
-    // }
-    addExons(isoform);
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        addCodingExon(exon);
+    }
+    //addExons(isoform);
     // Q_FOREACH(IntronPtr intron, isoform->introns) {
     //     addIntron(intron);
     // }
@@ -1106,22 +1106,22 @@ void Database::addExons(IsoformPtr isoform)
         error_n_in_sequence_list   <<  exon->errorNInSequence ;
     }
 
-     query.addBindValue(id_isoforms_list);
-     query.addBindValue(id_genes_list);
-     query.addBindValue(id_sequences_list);
-     query.addBindValue(startt_list);
-     query.addBindValue(endd_list);
-     query.addBindValue(lengthh_list);
-     query.addBindValue(typee_list);
-     query.addBindValue(start_phase_list);
-     query.addBindValue(end_phase_list);
-     query.addBindValue(length_phase_list);
-     query.addBindValue(indexx_list);
-     query.addBindValue(rev_index_list);
-     query.addBindValue(start_codon_list);
-     query.addBindValue(end_codon_list);
-     query.addBindValue(error_in_pseudo_flag_list);
-     query.addBindValue(error_n_in_sequence_list);
+     query.addBindValue(":id_isoforms", id_isoforms_list);
+     query.addBindValue(":id_genes", id_genes_list);
+     query.addBindValue(":id_sequences", id_sequences_list);
+     query.addBindValue(":startt", startt_list);
+     query.addBindValue(":endd", endd_list);
+     query.addBindValue(":lengthh", lengthh_list);
+     query.addBindValue(":typee", typee_list);
+     query.addBindValue(":start_phase", start_phase_list);
+     query.addBindValue(":end_phase", end_phase_list);
+     query.addBindValue(":length_phase", length_phase_list);
+     query.addBindValue(":indexx", indexx_list);
+     query.addBindValue(":rev_index", rev_index_list);
+     query.addBindValue(":start_codon", start_codon_list);
+     query.addBindValue(":end_codon", end_codon_list);
+     query.addBindValue(":error_in_pseudo_flag", error_in_pseudo_flag_list);
+     query.addBindValue(":error_n_in_sequence", error_n_in_sequence_list);
 
     if (!query.execBatch()) {
         qWarning() << query.lastError();
