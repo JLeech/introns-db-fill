@@ -41,6 +41,7 @@ public:
 
   void addGene(GenePtr gene);
   void addIsoform(IsoformPtr isoform);
+  void addExons(IsoformPtr isoform);
   void addCodingExon(ExonPtr exon);
   void addIntron(IntronPtr intron);
   void updateNeigbourIntronsIds(ExonPtr exon);

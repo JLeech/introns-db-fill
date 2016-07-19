@@ -1026,7 +1026,8 @@ void Database::addIsoform(IsoformPtr isoform)
 
 }
 
-void Database::addExons(IsoformPtr isoform){
+void Database::addExons(IsoformPtr isoform)
+{
     
     const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
     const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
