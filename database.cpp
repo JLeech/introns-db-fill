@@ -1217,7 +1217,8 @@ void Database::addIntrons(IsoformPtr isoform)
         end_dinucleotide_list <<  intron->endDinucleotide;
         lengthh_list <<  qint32(intron->end) - qint32(intron->start) + 1;
         indexx_list <<  intron->index;
-        rev_index_list <<  UINT32_MAX == intron->revIndex ? 0 : intron->revIndex;
+        auto rev_index = UINT32_MAX == intron->revIndex ? 0 : intron->revIndex;
+        rev_index_list << rev_index;
         length_phase_list <<  intron->lengthPhase;
         phase_list <<  intron->phase;
         error_start_dinucleotide_list <<  intron->errorInStartDinucleotide;
