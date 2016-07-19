@@ -903,7 +903,92 @@ void Database::addGene(GenePtr gene)
 
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         //addIsoform(isoform);
+        saveIsoform(isoform);
     }
+
+}
+
+void Database::saveIsoform(IsoformPtr isoform)
+{
+    const qint32 geneId = isoform->gene.toStrongRef()->id;
+    isoform->exonsLength = 0;
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        // coordinates include both borders in GBK
+        quint32 exonLength = (qint64)exon->end - (qint64)exon->start + 1;
+        if (!exon->origin.isEmpty()) {
+            const QByteArray & origin = exon->origin;
+            const quint32 originSize = origin.length();
+            Q_ASSERT(exonLength == originSize);
+        }
+        isoform->exonsLength += exonLength;
+    }
+    isoform->errorInLength = 0 != (isoform->exonsLength % 3);
+    isoform->errorMain = isoform->errorMain || isoform->errorInLength;
+
+    QString isoform_data = QString::number(geneId)+","+
+        QString::numbers(isoform->sequence.toStrongRef()->id) + "," +
+        isoform->proteinXref+ "," +
+        isoform->proteinId + "," +
+        isoform->product + "," +
+        isoform->errorMain ? isoform->note : "";
+
+
+    //query.bindValue(":id_genes", geneId);
+    //query.bindValue(":id_sequences", isoform->sequence.toStrongRef()->id);
+    //query.bindValue(":protein_xref", isoform->proteinXref);
+    //query.bindValue(":protein_id", isoform->proteinId);
+    //query.bindValue(":product", isoform->product);
+    // query.bindValue(":note", isoform->errorMain ? isoform->note : "");
+    // query.bindValue(":cds_start", UINT32_MAX == isoform->cdsStart ? 0 : isoform->cdsStart);
+    // query.bindValue(":cds_end", isoform->cdsEnd);
+    // query.bindValue(":mrna_start", UINT32_MAX == isoform->mrnaStart ? 0 : isoform->mrnaStart);
+    // query.bindValue(":mrna_end", isoform->mrnaEnd);
+    // query.bindValue(":mrna_length",
+    //                 isoform->mrnaEnd == 0 || UINT32_MAX == isoform->mrnaStart
+    //                 ? 0 : qint32(isoform->mrnaEnd) - qint32(isoform->mrnaStart) + 1);
+    // query.bindValue(":exons_cds_count", isoform->exonsCdsCount);
+    // query.bindValue(":exons_mrna_count", isoform->exonsMrnaCount);
+    // query.bindValue(":exons_length", isoform->exonsLength);
+    // query.bindValue(":start_codon", isoform->startCodon);
+    // query.bindValue(":end_codon", isoform->endCodon);
+    // query.bindValue(":maximum_by_introns", isoform->isMaximumByIntrons);
+
+    // query.bindValue(":error_in_length", isoform->errorInLength);
+    // query.bindValue(":error_in_start_codon", isoform->errorInStartCodon);
+    // query.bindValue(":error_in_end_codon", isoform->errorInEndCodon);
+    // query.bindValue(":error_in_intron", isoform->errorInIntron);
+    // query.bindValue(":error_in_coding_exon", isoform->errorInCodingExon);
+    // query.bindValue(":error_main", isoform->errorMain);    
+
+
+    // id_genes INT NOT NULL,
+    // id_sequences INT NOT NULL,
+    // protein_xref VARCHAR(40),
+    // protein_id VARCHAR(100),
+    // product VARCHAR(250),
+    // note TEXT,
+    // cds_start INT,
+    // cds_end INT,
+    // mrna_start INT,
+    // mrna_end INT,
+    // mrna_length INT,
+    // exons_cds_count INT,
+    // exons_mrna_count INT,
+    // exons_length INT,
+    // start_codon VARCHAR(3),
+    // end_codon VARCHAR(3),
+    // maximum_by_introns BOOLEAN,
+
+    // error_in_length BOOLEAN NOT NULL DEFAULT 0,
+    // error_in_start_codon BOOLEAN NOT NULL DEFAULT 0,
+    // error_in_end_codon BOOLEAN NOT NULL DEFAULT 0,
+    // error_in_intron BOOLEAN NOT NULL DEFAULT 0,
+    // error_in_coding_exon BOOLEAN NOT NULL DEFAULT 0,
+    // error_main BOOLEAN NOT NULL DEFAULT 0,
+    // error_comment TEXT
+
+    // int myInt = 0;
+    // QString text = "someString" + QString::number( myInt ); // CORRECT
 
 }
 
