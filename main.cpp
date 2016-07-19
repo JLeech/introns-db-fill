@@ -131,8 +131,8 @@ void Worker::run()
 {
     qDebug() << "Created thread " << QThread::currentThreadId();
     _semaphore.acquire();
-    std::string decompress_command = "gzip -d " + _args.dataFolder.toStdString();
-    system (decompress_command.c_str());
+    //std::string decompress_command = "gzip -d " + _args.dataFolder.toStdString();
+    //system (decompress_command.c_str());
     for (_index = _from; _index < _to; ++_index) {
         const QString &fileName = _args.sourceFileNames.at(_index);
         qDebug() << "Start processing file " << fileName
@@ -141,8 +141,8 @@ void Worker::run()
         qDebug() << "Done processing file " << fileName
                  << " by worker " << QThread::currentThreadId();
     }
-    const char* compress_command = "gzip " + _args.dataFolder.toAscii();
-    system (compress_command);
+    //const char* compress_command = "gzip " + _args.dataFolder.toAscii();
+    //system (compress_command);
     qDebug() << "Finished thread " << QThread::currentThreadId();
 }
 
