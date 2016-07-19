@@ -1016,9 +1016,9 @@ void Database::addIsoform(IsoformPtr isoform)
     //     addCodingExon(exon);
     // }
     addExons(isoform);
-    Q_FOREACH(IntronPtr intron, isoform->introns) {
-        addIntron(intron);
-    }
+    // Q_FOREACH(IntronPtr intron, isoform->introns) {
+    //     addIntron(intron);
+    // }
 
     // Q_FOREACH(ExonPtr exon, isoform->exons) {
     //     updateNeigbourIntronsIds(exon);
