@@ -1012,10 +1012,10 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    addExons(isoform);
-    // Q_FOREACH(ExonPtr exon, isoform->exons) {
-    //     addCodingExon(exon);
-    // }
+    //addExons(isoform);
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        addCodingExon(exon);
+    }
     
     // Q_FOREACH(IntronPtr intron, isoform->introns) {
     //     addIntron(intron);
