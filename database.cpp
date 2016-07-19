@@ -1205,25 +1205,25 @@ void Database::addIntrons(IsoformPtr isoform)
     QVariantList warning_n_in_sequence_list;
 
     Q_FOREACH(IntronPtr intron, isoform->introns) {
-        query.bindValue(":id_isoforms", isoformId)
-        query.bindValue(":id_genes", geneId)
-        query.bindValue(":id_sequences", seqId)
-        query.bindValue(":prev_exon", intron->prevExon.toStrongRef()->id)
-        query.bindValue(":next_exon", intron->nextExon.toStrongRef()->id)
-        query.bindValue(":startt", intron->start)
-        query.bindValue(":endd", intron->end)
-        query.bindValue(":id_intron_types", intron->intronTypeId)
-        query.bindValue(":start_dinucleotide", intron->startDinucleotide)
-        query.bindValue(":end_dinucleotide", intron->endDinucleotide)
-        query.bindValue(":lengthh", qint32(intron->end) - qint32(intron->start) + 1)
-        query.bindValue(":indexx", intron->index)
-        query.bindValue(":rev_index", UINT32_MAX == intron->revIndex ? 0 : intron->revIndex)
-        query.bindValue(":length_phase", intron->lengthPhase)
-        query.bindValue(":phase", intron->phase)
-        query.bindValue(":error_start_dinucleotide", intron->errorInStartDinucleotide)
-        query.bindValue(":error_end_dinucleotide", intron->errorInEndDinucleotide)
-        query.bindValue(":error_main", intron->errorMain)
-        query.bindValue(":warning_n_in_sequence", intron->warningNInSequence)
+        query.bindValue(":id_isoforms", isoformId);
+        query.bindValue(":id_genes", geneId);
+        query.bindValue(":id_sequences", seqId);
+        query.bindValue(":prev_exon", intron->prevExon.toStrongRef()->id);
+        query.bindValue(":next_exon", intron->nextExon.toStrongRef()->id);
+        query.bindValue(":startt", intron->start);
+        query.bindValue(":endd", intron->end);
+        query.bindValue(":id_intron_types", intron->intronTypeId);
+        query.bindValue(":start_dinucleotide", intron->startDinucleotide);
+        query.bindValue(":end_dinucleotide", intron->endDinucleotide);
+        query.bindValue(":lengthh", qint32(intron->end) - qint32(intron->start) + 1);
+        query.bindValue(":indexx", intron->index);
+        query.bindValue(":rev_index", UINT32_MAX == intron->revIndex ? 0 : intron->revIndex);
+        query.bindValue(":length_phase", intron->lengthPhase);
+        query.bindValue(":phase", intron->phase);
+        query.bindValue(":error_start_dinucleotide", intron->errorInStartDinucleotide);
+        query.bindValue(":error_end_dinucleotide", intron->errorInEndDinucleotide);
+        query.bindValue(":error_main", intron->errorMain);
+        query.bindValue(":warning_n_in_sequence", intron->warningNInSequence);
     }
     if (!query.execBatch()) {
         qWarning() << query.lastError();
