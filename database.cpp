@@ -1029,9 +1029,9 @@ void Database::addIsoform(IsoformPtr isoform)
 void Database::addExons(IsoformPtr isoform)
 {
     
-    const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
-    const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
-    const qint32 isoformId = exon->isoform.toStrongRef()->id;
+    const qint32 seqId = isoform->gene.toStrongRef()->sequence.toStrongRef()->id;
+    const qint32 geneId = isoform->gene.toStrongRef()->id;
+    const qint32 isoformId = isoform->id;
 
     QSqlQuery query("", *_db);
     query.prepare("INSERT INTO exons("
@@ -1106,22 +1106,22 @@ void Database::addExons(IsoformPtr isoform)
         error_n_in_sequence_list   <<  exon->errorNInSequence ;
     }
 
-     q.addBindValue(id_isoforms_list);
-     q.addBindValue(id_genes_list);
-     q.addBindValue(id_sequences_list);
-     q.addBindValue(startt_list);
-     q.addBindValue(endd_list);
-     q.addBindValue(lengthh_list);
-     q.addBindValue(typee_list);
-     q.addBindValue(start_phase_list);
-     q.addBindValue(end_phase_list);
-     q.addBindValue(length_phase_list);
-     q.addBindValue(indexx_list);
-     q.addBindValue(rev_index_list);
-     q.addBindValue(start_codon_list);
-     q.addBindValue(end_codon_list);
-     q.addBindValue(error_in_pseudo_flag_list);
-     q.addBindValue(error_n_in_sequence_list);
+     query.addBindValue(id_isoforms_list);
+     query.addBindValue(id_genes_list);
+     query.addBindValue(id_sequences_list);
+     query.addBindValue(startt_list);
+     query.addBindValue(endd_list);
+     query.addBindValue(lengthh_list);
+     query.addBindValue(typee_list);
+     query.addBindValue(start_phase_list);
+     query.addBindValue(end_phase_list);
+     query.addBindValue(length_phase_list);
+     query.addBindValue(indexx_list);
+     query.addBindValue(rev_index_list);
+     query.addBindValue(start_codon_list);
+     query.addBindValue(end_codon_list);
+     query.addBindValue(error_in_pseudo_flag_list);
+     query.addBindValue(error_n_in_sequence_list);
 
     if (!query.execBatch()) {
         qWarning() << query.lastError();
