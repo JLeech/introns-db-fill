@@ -1012,10 +1012,12 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    //addExons(isoform);
-    Q_FOREACH(ExonPtr exon, isoform->exons) {
-        addCodingExon(exon);
-    }
+    addExons(isoform);
+    addIntrons(isoform);
+
+    // Q_FOREACH(ExonPtr exon, isoform->exons) {
+    //     addCodingExon(exon);
+    // }
     
     // Q_FOREACH(IntronPtr intron, isoform->introns) {
     //     addIntron(intron);
@@ -1130,6 +1132,106 @@ void Database::addExons(IsoformPtr isoform)
         qWarning() << query.lastQuery();
         return;
     }
+}
+
+void Database::addIntrons(IsoformPtr isoform)
+{
+    const qint32 seqId = isoform->gene.toStrongRef()->sequence.toStrongRef()->id;
+    const qint32 geneId = isoform->gene.toStrongRef()->id;
+    const qint32 isoformId = isoform->id;
+
+    QSqlQuery query("", *_db);
+
+    query.prepare("INSERT INTO introns("
+                  "id_isoforms"
+                  ", id_genes"
+                  ", id_sequences"
+                  ", prev_exon"
+                  ", next_exon"
+                  ", startt"
+                  ", endd"
+                  ", id_intron_types"
+                  ", start_dinucleotide"
+                  ", end_dinucleotide"
+                  ", lengthh"
+                  ", indexx"
+                  ", rev_index"
+                  ", length_phase"
+                  ", phase"
+                  ", error_start_dinucleotide"
+                  ", error_end_dinucleotide"
+                  ", error_main"
+                  ", warning_n_in_sequence"
+                  ") VALUES("
+                  ":id_isoforms"
+                  ", :id_genes"
+                  ", :id_sequences"
+                  ", :prev_exon"
+                  ", :next_exon"
+                  ", :startt"
+                  ", :endd"
+                  ", :id_intron_types"
+                  ", :start_dinucleotide"
+                  ", :end_dinucleotide"
+                  ", :lengthh"
+                  ", :indexx"
+                  ", :rev_index"
+                  ", :length_phase"
+                  ", :phase"
+                  ", :error_start_dinucleotide"
+                  ", :error_end_dinucleotide"
+                  ", :error_main"
+                  ", :warning_n_in_sequence"
+                  ")");
+
+    QVariantList id_isoforms_list;
+    QVariantList id_genes_list;
+    QVariantList id_sequences_list;
+    QVariantList prev_exon_list;
+    QVariantList next_exon_list;
+    QVariantList startt_list;
+    QVariantList endd_list;
+    QVariantList id_intron_types_list;
+    QVariantList start_dinucleotide_list;
+    QVariantList end_dinucleotide_list;
+    QVariantList lengthh_list;
+    QVariantList indexx_list;
+    QVariantList rev_index_list;
+    QVariantList length_phase_list;
+    QVariantList phase_list;
+    QVariantList error_start_dinucleotide_list;
+    QVariantList error_end_dinucleotide_list;
+    QVariantList error_main_list;
+    QVariantList warning_n_in_sequence_list;
+
+    Q_FOREACH(IntronPtr intron, isoform->introns) {
+        query.bindValue(":id_isoforms", isoformId)
+        query.bindValue(":id_genes", geneId)
+        query.bindValue(":id_sequences", seqId)
+        query.bindValue(":prev_exon", intron->prevExon.toStrongRef()->id)
+        query.bindValue(":next_exon", intron->nextExon.toStrongRef()->id)
+        query.bindValue(":startt", intron->start)
+        query.bindValue(":endd", intron->end)
+        query.bindValue(":id_intron_types", intron->intronTypeId)
+        query.bindValue(":start_dinucleotide", intron->startDinucleotide)
+        query.bindValue(":end_dinucleotide", intron->endDinucleotide)
+        query.bindValue(":lengthh", qint32(intron->end) - qint32(intron->start) + 1)
+        query.bindValue(":indexx", intron->index)
+        query.bindValue(":rev_index", UINT32_MAX == intron->revIndex ? 0 : intron->revIndex)
+        query.bindValue(":length_phase", intron->lengthPhase)
+        query.bindValue(":phase", intron->phase)
+        query.bindValue(":error_start_dinucleotide", intron->errorInStartDinucleotide)
+        query.bindValue(":error_end_dinucleotide", intron->errorInEndDinucleotide)
+        query.bindValue(":error_main", intron->errorMain)
+        query.bindValue(":warning_n_in_sequence", intron->warningNInSequence)
+    }
+    if (!query.execBatch()) {
+        qWarning() << query.lastError();
+        qWarning() << query.lastError().text();
+        qWarning() << query.lastQuery();
+        return;
+    }
+
 }
 
 void Database::addCodingExon(ExonPtr exon)
