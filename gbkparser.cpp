@@ -380,7 +380,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         // CDS must be linked to existing mRNA isoform
         const QList<IsoformPtr> & geneIsoforms = targetGene->isoforms;
         targetIsoform = findRnaIsoformContainingLocation(
-                        , starts, ends, bw
+                        geneIsoforms, starts, ends, bw
                     );
 
         if (! targetIsoform) {

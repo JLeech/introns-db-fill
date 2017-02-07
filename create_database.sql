@@ -212,7 +212,7 @@ create TABLE exons(
     typee SMALLINT NOT NULL DEFAULT 4 /* = Unknown */,
     start_phase SMALLINT,
     end_phase SMALLINT,
-    ?length_phase SMALLINT,
+    length_phase SMALLINT,
     indexx INT,
     rev_index INT,
     start_codon VARCHAR(3),
