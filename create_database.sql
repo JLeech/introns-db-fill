@@ -96,7 +96,7 @@ CREATE TABLE orthologous_groups(
 CREATE TABLE organisms(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
-    common_name VARCHAR(200) NOT NULL,
+    common_name VARCHAR(200) NOT NULL DEFAULT "xx",
     ref_seq_assembly_id VARCHAR(20),
     annotation_release VARCHAR(200),
     annotation_date DATE,
