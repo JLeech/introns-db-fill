@@ -117,6 +117,7 @@ struct Organism
     QMutex          mutex; // for multithreaded processing
     qint32          id = 0;
     QString         name;
+    QString         common_name;
     QString         refSeqAssemblyId;
     QString         annotationRelease;
     QDate           annotationDate;

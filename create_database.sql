@@ -96,6 +96,7 @@ CREATE TABLE orthologous_groups(
 CREATE TABLE organisms(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
+    common_name VARCHAR(200) NOT NULL,
     ref_seq_assembly_id VARCHAR(20),
     annotation_release VARCHAR(200),
     annotation_date DATE,
@@ -211,7 +212,7 @@ create TABLE exons(
     typee SMALLINT NOT NULL DEFAULT 4 /* = Unknown */,
     start_phase SMALLINT,
     end_phase SMALLINT,
-    length_phase SMALLINT,
+    ?length_phase SMALLINT,
     indexx INT,
     rev_index INT,
     start_codon VARCHAR(3),

@@ -380,17 +380,17 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         // CDS must be linked to existing mRNA isoform
         const QList<IsoformPtr> & geneIsoforms = targetGene->isoforms;
         targetIsoform = findRnaIsoformContainingLocation(
-                    geneIsoforms, starts, ends, bw
+                        , starts, ends, bw
                     );
 
         if (! targetIsoform) {
-//            const QString protName = attrs.contains("protein_id")
-//                    ? attrs["protein_id"] : "[unknown_protein_id]";
-//            const QString seqFileName = seq->sourceFileName;
-//            const QString message =
-//                    QString("Can't find mRNA for CDS: { protein = %1, sequenceFile = %2 }")
-//                    .arg(protName).arg(seqFileName);
-//            qWarning() << message;
+           // const QString protName = attrs.contains("protein_id")
+           //         ? attrs["protein_id"] : "[unknown_protein_id]";
+           // const QString seqFileName = seq->sourceFileName;
+           // const QString message =
+           //         QString("Can't find mRNA for CDS: { protein = %1, sequenceFile = %2 }")
+           //         .arg(protName).arg(seqFileName);
+           // qWarning() << message;
             _db->addOrphanedCDS(seq->sourceFileName, _featureStartLineNo, _currentLineNo,
                                 refSeqId, dbXref, product);
             return;

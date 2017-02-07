@@ -1,3 +1,13 @@
+// c_base_fill - 14 
+// real    231m29.210s
+// user    63m5.135s
+// sys 3m42.962s
+// d_base_fill - 6 
+// real    53m15.663s
+// user    10m34.641s
+// sys 1m3.945s
+
+
 #include "database.h"
 
 #include <QByteArray>
@@ -107,6 +117,7 @@ OrganismPtr Database::findOrCreateOrganism(const QString &name)
             organism = OrganismPtr(new Organism);
             organism->id = organismRecord.field("id").value().toInt();
             organism->name = organismRecord.field("name").value().toString();
+            organism->common_name = organismRecord.field("common_name").value().toString();
             organism->refSeqAssemblyId = organismRecord.field("ref_seq_assembly_id").value().toString();
             organism->annotationRelease = organismRecord.field("annotation_release").value().toString();
             organism->annotationDate = organismRecord.field("annotation_date").value().toDate();
@@ -240,6 +251,7 @@ void Database::updateOrganism(OrganismPtr organism)
     query.prepare("UPDATE organisms SET "
                         "name=:name, "
                         "ref_seq_assembly_id=:ref_seq_assembly_id, "
+                        "common_name=:common_name, "
                         "annotation_release=:annotation_release, "
                         "annotation_date=:annotation_date, "
                         "taxonomy_xref=:taxonomy_xref, "
@@ -263,6 +275,7 @@ void Database::updateOrganism(OrganismPtr organism)
     query.bindValue(":id", organism->id);
     query.bindValue(":name", organism->name);
     query.bindValue(":ref_seq_assembly_id", organism->refSeqAssemblyId);
+    query.bindValue(":common_name", organism->common_name);
     query.bindValue(":annotation_release", organism->annotationRelease);
     query.bindValue(":annotation_date", organism->annotationDate);
     query.bindValue(":taxonomy_xref", organism->taxonomyXref);
