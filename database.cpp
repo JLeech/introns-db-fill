@@ -117,7 +117,7 @@ OrganismPtr Database::findOrCreateOrganism(const QString &name)
             organism = OrganismPtr(new Organism);
             organism->id = organismRecord.field("id").value().toInt();
             organism->name = organismRecord.field("name").value().toString();
-            organism->common_name = organismRecord.field("common_name").value().toString();
+            organism->commonName = organismRecord.field("common_name").value().toString();
             organism->refSeqAssemblyId = organismRecord.field("ref_seq_assembly_id").value().toString();
             organism->annotationRelease = organismRecord.field("annotation_release").value().toString();
             organism->annotationDate = organismRecord.field("annotation_date").value().toDate();
@@ -275,7 +275,7 @@ void Database::updateOrganism(OrganismPtr organism)
     query.bindValue(":id", organism->id);
     query.bindValue(":name", organism->name);
     query.bindValue(":ref_seq_assembly_id", organism->refSeqAssemblyId);
-    query.bindValue(":common_name", organism->common_name);
+    query.bindValue(":common_name", organism->commonName);
     query.bindValue(":annotation_release", organism->annotationRelease);
     query.bindValue(":annotation_date", organism->annotationDate);
     query.bindValue(":taxonomy_xref", organism->taxonomyXref);

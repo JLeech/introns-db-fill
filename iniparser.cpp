@@ -20,6 +20,7 @@ void IniParser::updateOrganism(OrganismPtr organism)
     const QVariant ref_seq_assembly_id = value("organisms", "ref_seq_assembly_id");
     const QVariant real_chromosome_count = value("organisms", "real_chromosome_count");
     const QVariant common_name = value("organisms", "common_name");
+
     const QVariant real_mitochondria = value("organisms", "real_mitochondria");
     const QVariant annotation_release = value("organisms", "annotation_release");
     const QVariant annotation_date = value("organisms", "annotation_date");
@@ -34,7 +35,7 @@ void IniParser::updateOrganism(OrganismPtr organism)
         organism->realChromosomeCount = real_chromosome_count.toUInt();
     }
     if (common_name.isValid()) {
-        organism->common_name = common_name.toString();
+        organism->commonName = common_name.toString();
     }
     if (real_mitochondria.isValid()) {
         organism->realMitochondria = bool(real_mitochondria.toUInt());
