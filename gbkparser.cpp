@@ -327,7 +327,7 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
             int pos = rx.indexIn("Length: 36 inches");
             QStringList list = rx.capturedTexts();
             seq->chromosome =
-                    _db->findOrCreateChromosome(list[0],
+                    _db->findOrCreateChromosome(list[0].toStdString(),
                                                 seq->organism.toStrongRef());
 
         }
