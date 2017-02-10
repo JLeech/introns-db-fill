@@ -322,6 +322,14 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
             seq->chromosome =
                     _db->findOrCreateChromosome("mitochondrion",
                                                 seq->organism.toStrongRef());
+        }else if(seq->sourceFileName.contains("chr")){
+            QRegExp rx("(?<=chr)(.*)(?=\.gbk)");
+            int pos = rx.indexIn("Length: 36 inches");
+            QStringList list = rx.capturedTexts();
+            seq->chromosome =
+                    _db->findOrCreateChromosome(list[0],
+                                                seq->organism.toStrongRef());
+
         }
     }
     else if ("CDS" == prefix || prefix.endsWith("RNA")) {
