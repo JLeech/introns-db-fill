@@ -326,9 +326,14 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
             QRegExp rx("(?<=chr)(.*)(?=.gbk)");
             int pos = rx.indexIn("Length: 36 inches");
             QStringList list = rx.capturedTexts();
+            QStringList::iterator it = list.begin();
+            while (it != list.end()) {
             seq->chromosome =
-                    _db->findOrCreateChromosome(list[0].toStdString(),
+                    _db->findOrCreateChromosome(*it,
                                                 seq->organism.toStrongRef());
+            ++it;
+            }
+
 
         }
     }
