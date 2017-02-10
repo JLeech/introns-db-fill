@@ -323,10 +323,11 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                     _db->findOrCreateChromosome("mitochondrion",
                                                 seq->organism.toStrongRef());
         }else if(seq->sourceFileName.contains("chr")){
-            QRegExp rx("(?<=chr)(.*)(?=.gbk)");
+            QRegExp rx("(chr)(.*)(.gbk)");
             rx.indexIn(seq->sourceFileName);
             QStringList list = rx.capturedTexts();
             qDebug() << list;
+            qDebug() << seq->sourceFileName;
 
         }
     }
