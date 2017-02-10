@@ -1025,16 +1025,16 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    addExons(isoform);
-    addIntrons(isoform);
+    // addExons(isoform);
+    // addIntrons(isoform);
 
-    // Q_FOREACH(ExonPtr exon, isoform->exons) {
-    //     addCodingExon(exon);
-    // }
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        addCodingExon(exon);
+    }
     
-    // Q_FOREACH(IntronPtr intron, isoform->introns) {
-    //     addIntron(intron);
-    // }
+    Q_FOREACH(IntronPtr intron, isoform->introns) {
+        addIntron(intron);
+    }
 
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         updateNeigbourIntronsIds(exon);
@@ -1433,7 +1433,6 @@ void Database::updateNeigbourIntronsIds(ExonPtr exon)
             qWarning() << query.lastError().text();
             qWarning() << query.lastQuery();
         }
-        qWarning() << "EPI: " << prevId;
     }
     if (exon->nextIntron) {
         const qint32 nextId = exon->nextIntron.toStrongRef()->id;
@@ -1445,7 +1444,6 @@ void Database::updateNeigbourIntronsIds(ExonPtr exon)
             qWarning() << query.lastError().text();
             qWarning() << query.lastQuery();
         }
-        qWarning() << "ENI: " << nextId;
     }
 }
 
