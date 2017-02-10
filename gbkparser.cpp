@@ -330,6 +330,11 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                     _db->findOrCreateChromosome(list[2],
                                                 seq->organism.toStrongRef());
 
+        }else{
+            seq->chromosome =
+                    _db->findOrCreateChromosome("undefined",
+                                                seq->organism.toStrongRef());
+
         }
     }
     else if ("CDS" == prefix || prefix.endsWith("RNA")) {
