@@ -1433,7 +1433,7 @@ void Database::updateNeigbourIntronsIds(ExonPtr exon)
             qWarning() << query.lastError().text();
             qWarning() << query.lastQuery();
         }
-        qWarning() << query.executedQuery();
+        qWarning() << "EPI: " << prevId;
     }
     if (exon->nextIntron) {
         const qint32 nextId = exon->nextIntron.toStrongRef()->id;
@@ -1445,6 +1445,7 @@ void Database::updateNeigbourIntronsIds(ExonPtr exon)
             qWarning() << query.lastError().text();
             qWarning() << query.lastQuery();
         }
+        qWarning() << "ENI: " << nextId;
     }
 }
 
