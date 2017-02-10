@@ -1025,8 +1025,8 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->id = query.lastInsertId().toInt();
     }
 
-    addExons(isoform);
-    addIntrons(isoform);
+    //addExons(isoform);
+    //addIntrons(isoform);
 
     // Q_FOREACH(ExonPtr exon, isoform->exons) {
     //     addCodingExon(exon);
@@ -1036,9 +1036,9 @@ void Database::addIsoform(IsoformPtr isoform)
     //     addIntron(intron);
     // }
 
-    // Q_FOREACH(ExonPtr exon, isoform->exons) {
-    //     updateNeigbourIntronsIds(exon);
-    // }
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        updateNeigbourIntronsIds(exon);
+    }
 
 }
 
@@ -1221,8 +1221,8 @@ void Database::addIntrons(IsoformPtr isoform)
         id_isoforms_list <<  isoformId;
         id_genes_list <<  geneId;
         id_sequences_list <<  seqId;
-        prev_exon_list <<  7;
-        next_exon_list <<  7;
+        prev_exon_list <<  intron->prevExon.toStrongRef()->id;
+        next_exon_list <<  intron->nextExon.toStrongRef()->id;
         startt_list <<  intron->start;
         endd_list <<  intron->end;
         id_intron_types_list <<  intron->intronTypeId;
