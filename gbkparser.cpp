@@ -326,8 +326,9 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
             QRegExp rx("(chr)(.*)(.gbk)");
             rx.indexIn(seq->sourceFileName);
             QStringList list = rx.capturedTexts();
-            qDebug() << list;
-            qDebug() << seq->sourceFileName;
+            seq->chromosome =
+                    _db->findOrCreateChromosome(list[2],
+                                                seq->organism.toStrongRef());
 
         }
     }
