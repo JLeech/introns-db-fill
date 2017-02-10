@@ -1221,8 +1221,8 @@ void Database::addIntrons(IsoformPtr isoform)
         id_isoforms_list <<  isoformId;
         id_genes_list <<  geneId;
         id_sequences_list <<  seqId;
-        prev_exon_list <<  intron->prevExon.toStrongRef()->id;
-        next_exon_list <<  intron->nextExon.toStrongRef()->id;
+        prev_exon_list <<  7;
+        next_exon_list <<  7;
         startt_list <<  intron->start;
         endd_list <<  intron->end;
         id_intron_types_list <<  intron->intronTypeId;
