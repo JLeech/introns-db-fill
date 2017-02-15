@@ -148,7 +148,7 @@ CREATE TABLE orphaned_cdses(
     source_line_start INT NOT NULL,
     source_line_end INT NOT NULL,
     refseq_id VARCHAR(20) NOT NULL,
-    protein_xref VARCHAR(40),
+    ncbi_gi VARCHAR(40),
     product VARCHAR(200)
     /* CONSTRAINT unique_orphaned_cdses UNIQUE(source_file_name,source_line_start,source_line_end) */
 );
@@ -175,7 +175,7 @@ create TABLE isoforms(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_genes INT NOT NULL,
     id_sequences INT NOT NULL,
-    protein_xref VARCHAR(40),
+    ncbi_gi VARCHAR(40),
     protein_id VARCHAR(100),
     product VARCHAR(250),
     note TEXT,

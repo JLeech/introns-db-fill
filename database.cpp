@@ -692,21 +692,21 @@ void Database::addOrphanedCDS(const QString &fileName,
                   ", source_line_start"
                   ", source_line_end"
                   ", refseq_id"
-                  ", protein_xref"
+                  ", ncbi_gi"
                   ", product"
                   ") VALUES("
                   ":source_file_name"
                   ", :source_line_start"
                   ", :source_line_end"
                   ", :refseq_id"
-                  ", :protein_xref"
+                  ", :ncbi_gi"
                   ", :product"
                    ")");
     query.bindValue(":source_file_name", fileName);
     query.bindValue(":source_line_start", lineStart);
     query.bindValue(":source_line_end", lineEnd);
     query.bindValue(":refseq_id", refSeqId);
-    query.bindValue(":protein_xref", dbXref);
+    query.bindValue(":ncbi_gi", dbXref);
     query.bindValue(":product", product);
     if (!query.exec()) {
         qWarning() << query.lastError();
@@ -941,7 +941,7 @@ void Database::addIsoform(IsoformPtr isoform)
     query.prepare("INSERT INTO isoforms("
                   "id_genes"
                   ", id_sequences"
-                  ", protein_xref"
+                  ", ncbi_gi"
                   ", protein_id"
                   ", product"
                   ", note"
@@ -965,7 +965,7 @@ void Database::addIsoform(IsoformPtr isoform)
                   ") VALUES("
                   ":id_genes"
                   ", :id_sequences"
-                  ", :protein_xref"
+                  ", :ncbi_gi"
                   ", :protein_id"
                   ", :product"
                   ", :note"
@@ -989,7 +989,7 @@ void Database::addIsoform(IsoformPtr isoform)
                   ")");
     query.bindValue(":id_genes", geneId);
     query.bindValue(":id_sequences", isoform->sequence.toStrongRef()->id);
-    query.bindValue(":protein_xref", isoform->proteinXref);
+    query.bindValue(":ncbi_gi", isoform->proteinXref);
     query.bindValue(":protein_id", isoform->proteinId);
     query.bindValue(":product", isoform->product);
     query.bindValue(":note", isoform->errorMain ? isoform->note : "");
