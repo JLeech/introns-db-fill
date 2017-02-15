@@ -814,7 +814,7 @@ void Database::storeTranslation(IsoformPtr isoform)
             : organismName + "/" + chromosomeName + "/" + refName;
 
     QString geneName = gene->name;
-    QString protName = isoform->ncbiGI;
+    QString protName = isoform->proteinXref;
     QString fileName = geneName + "_" + protName;
     fileName.replace(QRegExp("\\s+"), "_");
     fileName.replace(".", "_");
@@ -989,7 +989,7 @@ void Database::addIsoform(IsoformPtr isoform)
                   ")");
     query.bindValue(":id_genes", geneId);
     query.bindValue(":id_sequences", isoform->sequence.toStrongRef()->id);
-    query.bindValue(":protein_xref", isoform->ncbiGI);
+    query.bindValue(":protein_xref", isoform->proteinXref);
     query.bindValue(":protein_id", isoform->proteinId);
     query.bindValue(":product", isoform->product);
     query.bindValue(":note", isoform->errorMain ? isoform->note : "");
