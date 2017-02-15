@@ -373,6 +373,8 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     parseRange(value, &start, &end, &bw, &starts, &ends);
     const QList<GenePtr> & allGenes = seq->genes;
 
+    QRegExp gene_id = QRegExp("[<>]");
+
     GenePtr targetGene;
     IsoformPtr targetIsoform;
     OrganismPtr organism = seq->organism.toStrongRef();
@@ -469,7 +471,10 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     }
     if (attrs.contains("db_xref")) {
         targetIsoform->proteinXref = attrs["db_xref"];
-        targetGene->ncbiGeneId = attrs["db_xref"];
+        if (!targetGene->ncbiGeneId){
+            qDebug() << ": " << attrs["db_xref"].split("\n").filter(gene_id) << " : ";
+            targetGene->ncbiGeneId = attrs["db_xref"];
+        }
     }
     if (attrs.contains("product")) {
         targetIsoform->product = attrs["product"];
