@@ -373,8 +373,8 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     parseRange(value, &start, &end, &bw, &starts, &ends);
     const QList<GenePtr> & allGenes = seq->genes;
 
-    QRegExp gene_id = QRegExp("^GeneID:*");
-
+    QRegExp gene_id_reg = QRegExp("^GeneID:*");
+    QRegExp gi_reg = QRegExp("^GI:*");
     GenePtr targetGene;
     IsoformPtr targetIsoform;
     OrganismPtr organism = seq->organism.toStrongRef();
@@ -470,10 +470,19 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         targetIsoform->proteinId = attrs["protein_id"];
     }
     if (attrs.contains("db_xref")) {
-        targetIsoform->proteinXref = attrs["db_xref"];
         if (targetGene->ncbiGeneId.isNull()){
-            qDebug() << ": " << attrs["db_xref"].split("\n").filter(gene_id) << " : ";
-            targetGene->ncbiGeneId = attrs["db_xref"];
+            QStringList geneID = attrs["db_xref"].split("\n").filter(gene_id_reg); 
+            if (geneID.length()>0){
+                targetGene->ncbiGeneId = geneID[0].split(":")[1];
+            }
+        }
+        if (targetIsoform->proteinXref.isNull()){
+            QStringList gis = attrs["db_xref"].split("\n").filter(gi_reg);
+            if (gis.length() > 0){
+                targetIsoform->proteinXref = gis[0];
+            }else{
+                targetIsoform->proteinXref = attrs["db_xref"];
+            }
         }
     }
     if (attrs.contains("product")) {
