@@ -352,7 +352,7 @@ GenePtr GbkParser::parseGene(const QString & value, SequencePtr seq)
         gene->name = attrs["gene"];
     }
     if (attrs.contains("db_xref")) {
-        QStringList geneID = attrs["db_xref"].split("\n").filter(gene_id_reg);
+        QStringList geneID = attrs["db_xref"].split("\n").filter(QRegExp("^GeneID:*"));
         if (geneID.length()>0){
             gene->ncbiGeneId = geneID[0].split(":")[1];
         }   
