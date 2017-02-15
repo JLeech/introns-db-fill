@@ -883,6 +883,7 @@ void Database::addGene(GenePtr gene)
                   ":id_sequences"
                   ", :id_organisms"
                   ", :name"
+                  ", :ncbi_gene_id"
                   ", :backward_chain"
                   ", :protein_but_not_rna"
                   ", :pseudo_gene"
