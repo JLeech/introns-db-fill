@@ -440,8 +440,9 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         if (! targetGene) {
             return;
         }
-
+        qDebug() << "PREF: " << prefix << "\n";
         if ("mRNA" == prefix) {
+            qDebug() << "CREATING mRNA" << "\n";
             targetIsoform = IsoformPtr(new Isoform);
             targetIsoform->type = Isoform::MRNA;
             targetIsoform->mrnaStart = start;
