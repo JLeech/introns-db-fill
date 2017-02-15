@@ -473,6 +473,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         if (targetGene->ncbiGeneId.isNull()){
             QStringList geneID = attrs["db_xref"].split("\n").filter(gene_id_reg); 
             if (geneID.length()>0){
+                qDebug() << "GENE : " << geneID << "\n";
                 targetGene->ncbiGeneId = geneID[0].split(":")[1];
             }
         }
