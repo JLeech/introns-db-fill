@@ -896,6 +896,7 @@ void Database::addGene(GenePtr gene)
     query.bindValue(":id_sequences", sequenceId);
     query.bindValue(":id_organisms", organismId);
     query.bindValue(":name", gene->name);
+    qDebug() << "BASE : " << gene->ncbiGeneId << "\n";
     query.bindValue(":ncbi_gene_id",gene->ncbiGeneId);
     query.bindValue(":backward_chain", gene->backwardChain);
     query.bindValue(":protein_but_not_rna", gene->isProteinButNotRna);
