@@ -870,6 +870,7 @@ void Database::addGene(GenePtr gene)
                   "id_sequences"
                   ", id_organisms"
                   ", name"
+                  ", ncbi_gene_id"
                   ", backward_chain"
                   ", protein_but_not_rna"
                   ", pseudo_gene"
@@ -894,6 +895,7 @@ void Database::addGene(GenePtr gene)
     query.bindValue(":id_sequences", sequenceId);
     query.bindValue(":id_organisms", organismId);
     query.bindValue(":name", gene->name);
+    query.bindValue(":ncbi_gene_id",gene->ncbiGeneId);
     query.bindValue(":backward_chain", gene->backwardChain);
     query.bindValue(":protein_but_not_rna", gene->isProteinButNotRna);
     query.bindValue(":pseudo_gene", gene->isPseudoGene);

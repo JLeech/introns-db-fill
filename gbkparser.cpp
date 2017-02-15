@@ -440,9 +440,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         if (! targetGene) {
             return;
         }
-        qDebug() << "PREF: " << prefix << "\n";
         if ("mRNA" == prefix) {
-            qDebug() << "CREATING mRNA" << "\n";
             targetIsoform = IsoformPtr(new Isoform);
             targetIsoform->type = Isoform::MRNA;
             targetIsoform->mrnaStart = start;
@@ -471,6 +469,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     }
     if (attrs.contains("db_xref")) {
         targetIsoform->proteinXref = attrs["db_xref"];
+        targetGene->ncbiGeneId = attrs["db_xref"];
     }
     if (attrs.contains("product")) {
         targetIsoform->product = attrs["product"];

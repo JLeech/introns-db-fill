@@ -178,6 +178,7 @@ struct Gene {
     SequenceWPtr    sequence;
     OrthologousGroupWPtr orthologousGroup;
     QString         name;
+    QString         ncbiGeneId;
     QString         note;
     bool            backwardChain = false;
     bool            isProteinButNotRna = false;

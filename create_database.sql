@@ -160,6 +160,7 @@ CREATE TABLE genes(
     id_sequences INT NOT NULL,
     id_orthologous_groups INT,
     name VARCHAR(40),
+    ncbi_gene_id VARCHAR(20),
     backward_chain BOOLEAN DEFAULT 0,
     protein_but_not_rna BOOLEAN,
     pseudo_gene BOOLEAN,
