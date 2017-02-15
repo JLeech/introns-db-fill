@@ -471,7 +471,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     }
     if (attrs.contains("db_xref")) {
         targetIsoform->proteinXref = attrs["db_xref"];
-        if (!targetGene->ncbiGeneId.isNull()){
+        if (!targetGene->ncbiGeneId.isEmpty()){
             qDebug() << ": " << attrs["db_xref"].split("\n").filter(gene_id) << " : ";
             targetGene->ncbiGeneId = attrs["db_xref"];
         }
