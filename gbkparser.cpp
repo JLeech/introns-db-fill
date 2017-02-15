@@ -760,9 +760,13 @@ QMap<QString, QString> GbkParser::parseFeatureAttributes(const QString &value)
         }
         const QString key = rxAttr.cap(1);
         QString value = rxAttr.cap(2);
-        //qDebug() << key << " -- " << value << "\n";
-        value.replace('\n', " ");        
-        result[key] = value.simplified();
+        if(key == "db_xref"){
+            value.replace('\n', " ");
+            result[key] = result[key] + "\n" + value;
+        }else{
+            value.replace('\n', " ");
+            result[key] = value.simplified();
+        }
     }
     pos = 0;
     Q_FOREVER {
