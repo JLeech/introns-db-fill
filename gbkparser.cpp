@@ -373,7 +373,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     parseRange(value, &start, &end, &bw, &starts, &ends);
     const QList<GenePtr> & allGenes = seq->genes;
 
-    QRegExp gene_id = QRegExp("[<>]");
+    QRegExp gene_id = QRegExp("^GeneID:*");
 
     GenePtr targetGene;
     IsoformPtr targetIsoform;
