@@ -202,7 +202,7 @@ struct Isoform {
     }               type = Other;
     GeneWPtr        gene;
     SequenceWPtr    sequence;
-    QString         proteinXref;
+    QString         ncbiGI;
     QString         proteinId;
     QString         product;
     QString         note;

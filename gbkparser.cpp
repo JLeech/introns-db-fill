@@ -469,7 +469,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         targetIsoform->proteinId = attrs["protein_id"];
     }
     if (attrs.contains("db_xref")) {
-        targetIsoform->proteinXref = attrs["db_xref"];
+        targetIsoform->ncbiGI = attrs["db_xref"];
     }
     if (attrs.contains("product")) {
         targetIsoform->product = attrs["product"];
