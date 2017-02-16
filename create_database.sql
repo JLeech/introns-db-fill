@@ -147,7 +147,7 @@ CREATE TABLE orphaned_cdses(
     source_file_name VARCHAR(50),
     source_line_start INT NOT NULL,
     source_line_end INT NOT NULL,
-    refseq_id VARCHAR(20) NOT NULL,
+    refseq_id VARCHAR(100) NOT NULL,
     ncbi_gi VARCHAR(100),
     product VARCHAR(200)
     /* CONSTRAINT unique_orphaned_cdses UNIQUE(source_file_name,source_line_start,source_line_end) */
@@ -160,7 +160,7 @@ CREATE TABLE genes(
     id_sequences INT NOT NULL,
     id_orthologous_groups INT,
     name VARCHAR(40),
-    ncbi_gene_id VARCHAR(20),
+    ncbi_gene_id VARCHAR(100),
     backward_chain BOOLEAN DEFAULT 0,
     protein_but_not_rna BOOLEAN,
     pseudo_gene BOOLEAN,
