@@ -148,7 +148,7 @@ CREATE TABLE orphaned_cdses(
     source_line_start INT NOT NULL,
     source_line_end INT NOT NULL,
     refseq_id VARCHAR(100) NOT NULL,
-    ncbi_gi VARCHAR(100),
+    ncbi_gi VARCHAR(200),
     product VARCHAR(200)
     /* CONSTRAINT unique_orphaned_cdses UNIQUE(source_file_name,source_line_start,source_line_end) */
 );
@@ -185,8 +185,8 @@ create TABLE isoforms(
     mrna_start INT,
     mrna_end INT,
     mrna_length INT,
-    exons_cds_count INT,
-    exons_mrna_count INT,
+    exons_cds_count INT DEFAULT 0,
+    exons_mrna_count INT DEFAULT 0,
     exons_length INT,
     start_codon VARCHAR(3),
     end_codon VARCHAR(3),
