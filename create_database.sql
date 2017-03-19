@@ -122,7 +122,7 @@ CREATE TABLE organisms(
 CREATE TABLE chromosomes(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_organisms INT NOT NULL,
-    name VARCHAR(20),
+    name VARCHAR(50),
     lengthh int
 );
 
