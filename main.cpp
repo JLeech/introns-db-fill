@@ -140,6 +140,7 @@ void Worker::run()
         processOneFile();
         qDebug() << "Done processing file " << fileName
                  << " by worker " << QThread::currentThreadId();
+        break;
     }
     //const char* compress_command = "gzip " + _args.dataFolder.toAscii();
     //system (compress_command);
