@@ -1017,6 +1017,7 @@ void Database::addIsoform(IsoformPtr isoform)
     query.bindValue(":error_in_coding_exon", isoform->errorInCodingExon);
     query.bindValue(":error_main", isoform->errorMain);
 
+    qDebug() << (isoform->exons.length() - isoform->introns.length());
 
     if (!query.exec()) {
         qWarning() << query.lastError();
