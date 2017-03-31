@@ -1016,8 +1016,11 @@ void Database::addIsoform(IsoformPtr isoform)
     query.bindValue(":error_in_intron", isoform->errorInIntron);
     query.bindValue(":error_in_coding_exon", isoform->errorInCodingExon);
     query.bindValue(":error_main", isoform->errorMain);
-
-    qDebug() << isoform->exons.length() << " - " << isoform->introns.length() << " = "<< (isoform->exons.length() - isoform->introns.length());
+    QFile f("/home/introns/ftp_loader/log.log");
+    if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
+      QTextStream stream(&f);
+      stream << isoform->exons.length() << " - " << isoform->introns.length() << " = "<< (isoform->exons.length() - isoform->introns.length()) << endl;
+    }
 
     if (!query.exec()) {
         qWarning() << query.lastError();
