@@ -247,9 +247,9 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
         }else{
             seq->gbk_date.setDate(1, 1, 1);
         }
-        // qDebug() << "... " << seq->refSeqId
-        //          << " from " << _fileName
-        //          << " by worker " << QThread::currentThreadId();
+        qDebug() << "... " << seq->refSeqId
+                 << " from " << _fileName
+                 << " by worker " << QThread::currentThreadId();
     }
     //ORGANISM  Homo sapiens
     else if ("ORGANISM" == prefix) {
