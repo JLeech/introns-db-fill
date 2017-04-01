@@ -237,8 +237,9 @@ int main(int argc, char *argv[])
     RealExonPtr exon2(new RealExon);
     exon1->start = 10;
     exon2->start = 0;
-    exons.push_back(exon1,exon2);
-
+    exons.push_back(exon1);
+    exons.push_back(exon2);
+    
     qSort(exons.begin(), exons.end(), variantLessThan);
 
 
