@@ -226,7 +226,7 @@ void Worker::processOneFile()
 
  bool variantLessThan(const RealExonPtr v1, const RealExonPtr v2)
  {
-     return v1->start < v2.start;
+     return v1->start < v2->start;
  }
 
 int main(int argc, char *argv[])
