@@ -60,6 +60,7 @@ typedef QSharedPointer<Gene> GenePtr;
 typedef QSharedPointer<Isoform> IsoformPtr;
 typedef QSharedPointer<Exon> ExonPtr;
 typedef QSharedPointer<Intron> IntronPtr;
+typedef QSharedPointer<RealExon> RealExonPtr;
 
 typedef QWeakPointer<IntronType> IntronTypeWPtr;
 typedef QWeakPointer<TaxKingdom> TaxKingdomWPtr;
@@ -78,6 +79,11 @@ typedef QWeakPointer<Intron> IntronWPtr;
 struct IntronType {
     QString         representation;
 };
+
+struct RealExon {
+    quint32         start = 0;
+    quint32         end = 0;
+}
 
 
 struct TaxKingdom {
