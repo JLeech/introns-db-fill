@@ -224,12 +224,24 @@ void Worker::processOneFile()
     }
 }
 
+ bool variantLessThan(const RealExonPtr v1, const RealExonPtr v2)
+ {
+     return v1->start < v2.start
+ }
 
 int main(int argc, char *argv[])
 {
 
-    QList<RealExonPtr>  genes;
-    RealExonPtr exon(new RealExon);
+    QList<RealExonPtr>  exons;
+    RealExonPtr exon1(new RealExon);
+    RealExonPtr exon2(new RealExon);
+    exon1->start = 10;
+    exon2->start = 0;
+    exons.push_back(exon1,exon2);
+
+    qSort(exons.begin(), exons.end(), variantLessThan);
+
+
 
     // QCoreApplication a(argc, argv);
 
