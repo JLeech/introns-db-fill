@@ -191,7 +191,7 @@ create TABLE isoforms(
     start_codon VARCHAR(3),
     end_codon VARCHAR(3),
     maximum_by_introns BOOLEAN,
-    has_no_exons BOOLEAN DEFAULT 0,
+    has_no_exons BOOLEAN,
 
     error_in_length BOOLEAN NOT NULL DEFAULT 0,
     error_in_start_codon BOOLEAN NOT NULL DEFAULT 0,
