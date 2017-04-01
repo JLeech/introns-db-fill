@@ -984,6 +984,7 @@ void Database::addIsoform(IsoformPtr isoform)
                   ", :start_codon"
                   ", :end_codon"
                   ", :maximum_by_introns"
+                  ", has_no_exons"
                   ", :error_in_length"
                   ", :error_in_start_codon"
                   ", :error_in_end_codon"
