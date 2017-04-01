@@ -239,10 +239,12 @@ int main(int argc, char *argv[])
     exon2->start = 0;
     exons.push_back(exon1);
     exons.push_back(exon2);
-    
+
     qSort(exons.begin(), exons.end(), variantLessThan);
 
-
+    for( int i=0; i<list.count(); ++i ){
+        qDebug() << exons[i]->start;
+    }
 
     // QCoreApplication a(argc, argv);
 
