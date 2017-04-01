@@ -1010,7 +1010,7 @@ void Database::addIsoform(IsoformPtr isoform)
     query.bindValue(":start_codon", isoform->startCodon);
     query.bindValue(":end_codon", isoform->endCodon);
     query.bindValue(":maximum_by_introns", isoform->isMaximumByIntrons);
-    query.bindValue(":has_no_exons", isoform->exons.length == 0 );
+    query.bindValue(":has_no_exons", (isoform->exons.length == 0) );
     query.bindValue(":error_in_length", isoform->errorInLength);
     query.bindValue(":error_in_start_codon", isoform->errorInStartCodon);
     query.bindValue(":error_in_end_codon", isoform->errorInEndCodon);
