@@ -23,6 +23,7 @@ struct Gene;
 struct Isoform;
 struct Exon;
 struct Intron;
+struct RealExon;
 
 struct Range {
     quint32 start;
