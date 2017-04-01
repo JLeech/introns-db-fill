@@ -226,7 +226,12 @@ void Worker::processOneFile()
 
  bool variantLessThan(const RealExonPtr v1, const RealExonPtr v2)
  {
-     return v1->start < v2->start;
+    if (v1->start < v2->start) return true;
+    if (v1->start > v2->start) return false;
+
+    if (v1->end < v2->end) return true;
+    if (v1->end > v2->end) return false;
+    return true;
  }
 
 int main(int argc, char *argv[])
@@ -235,16 +240,26 @@ int main(int argc, char *argv[])
     QList<RealExonPtr>  exons;
     RealExonPtr exon1(new RealExon);
     RealExonPtr exon2(new RealExon);
-    exon1->start = 10;
+    RealExonPtr exon3(new RealExon);
+    RealExonPtr exon4(new RealExon);
+    exon1->start = 0;
+    exon1->end = 10;
     exon2->start = 0;
+    exon2->end = 15;
+    exon3->start = 4;
+    exon3->end = 7;
+    exon4->start = 4;
+    exon4->end = 10;
     exons.push_back(exon1);
     exons.push_back(exon2);
+    exons.push_back(exon3);
+    exons.push_back(exon4);
 
     qSort(exons.begin(), exons.end(), variantLessThan);
 
     for( int i=0; i<exons.count(); ++i ){
-        qDebug() << exons[i]->start;
-    }
+        qDebug() << exons[i]->start << " : " << exons[i]->end;
+    };
 
     // QCoreApplication a(argc, argv);
 
