@@ -84,7 +84,7 @@ struct IntronType {
 struct RealExon {
     quint32         start = 0;
     quint32         end = 0;
-}
+};
 
 
 struct TaxKingdom {
