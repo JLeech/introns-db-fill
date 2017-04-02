@@ -203,19 +203,6 @@ create TABLE isoforms(
     error_comment TEXT
 );
 
-create TABLE real_exons(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_isoforms INT NOT NULL,
-    id_genes INT NOT NULL,
-    id_sequences INT NOT NULL,
-    startt INT NOT NULL,
-    endd INT NOT NULL,
-    lengthh INT,
-
-    start_codon VARCHAR(3),
-    end_codon VARCHAR(3)
-)
-
 create TABLE exons(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_isoforms INT NOT NULL,
