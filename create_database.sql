@@ -201,7 +201,7 @@ create TABLE isoforms(
     error_main BOOLEAN NOT NULL DEFAULT 0,
     error_comment TEXT
 );
-sdfdf
+
 create TABLE exons(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_isoforms INT NOT NULL,
