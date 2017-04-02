@@ -202,9 +202,10 @@ create TABLE isoforms(
     error_comment TEXT
 );
 
-create TABLE exons(
 
-    
+
+
+create TABLE exons(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_isoforms INT NOT NULL,
     id_genes INT NOT NULL,
