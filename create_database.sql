@@ -1,6 +1,7 @@
 USE test
 DROP TABLE IF EXISTS introns;
 DROP TABLE IF EXISTS exons;
+DROP TABLE IF EXISTS real_exons;
 DROP TABLE IF EXISTS isoforms;
 DROP TABLE IF EXISTS orphaned_cdses;
 DROP TABLE IF EXISTS genes;
@@ -202,6 +203,19 @@ create TABLE isoforms(
     error_comment TEXT
 );
 
+create TABLE real_exons(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_isoforms INT NOT NULL,
+    id_genes INT NOT NULL,
+    id_sequences INT NOT NULL,
+    startt INT NOT NULL,
+    endd INT NOT NULL,
+    lengthh INT,
+
+    start_codon VARCHAR(3),
+    end_codon VARCHAR(3)
+)
+
 create TABLE exons(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_isoforms INT NOT NULL,
@@ -257,6 +271,7 @@ create TABLE introns(
 
 ALTER TABLE  introns AUTO_INCREMENT = 1;
 ALTER TABLE  exons AUTO_INCREMENT = 1;
+ALTER TABLE  real_exons AUTO_INCREMENT = 1;
 ALTER TABLE  isoforms AUTO_INCREMENT = 1;
 ALTER TABLE  genes AUTO_INCREMENT = 1;
 ALTER TABLE  sequences AUTO_INCREMENT = 1;

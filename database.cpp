@@ -922,6 +922,18 @@ void Database::addGene(GenePtr gene)
         addIsoform(isoform);
     }
 
+    int exons_count = 0;
+    int max_real_exon = 0
+    Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+        Q_FOREACH(ExonPtr exon, isoform->exons){
+            exons_count += 1;
+            int cur_id = exon->real_exon.toStrongRef()->id;
+            if (cur_id > max_real_exon){
+                max_real_exon = cur_id;
+            }
+        }
+    }
+    qDebug() << exons_count << " : " << max_real_exon;
 }
 
 void Database::addIsoform(IsoformPtr isoform)
