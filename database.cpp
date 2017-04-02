@@ -928,12 +928,13 @@ void Database::addGene(GenePtr gene)
         Q_FOREACH(ExonPtr exon, isoform->exons){
             exons_count += 1;
             int cur_id = exon->realExon->id;
+            qDebug() << "id: " << exon->realExon->id;
             if (cur_id > max_real_exon){
                 max_real_exon = cur_id;
             }
         }
     }
-    qDebug() << exons_count << " : " << max_real_exon;
+    //qDebug() << exons_count << " : " << max_real_exon;
 }
 
 void Database::addIsoform(IsoformPtr isoform)
