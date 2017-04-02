@@ -693,7 +693,6 @@ void GbkParser::makeRealExons(SequencePtr seq)
                     current_id++;
                 }
                 exon->realExon = real_exon;
-                qDebug() << exon->nextIntron.toStrongRef()->start;
             }
         }
     }
