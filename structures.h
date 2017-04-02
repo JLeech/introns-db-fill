@@ -75,7 +75,7 @@ typedef QWeakPointer<Gene> GeneWPtr;
 typedef QWeakPointer<Isoform> IsoformWPtr;
 typedef QWeakPointer<Exon> CodingExonWPtr;
 typedef QWeakPointer<Intron> IntronWPtr;
-
+typedef QWeakPointer<RealExon> RealExonWPtr;
 
 struct IntronType {
     QString         representation;
