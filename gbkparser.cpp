@@ -121,8 +121,10 @@ SequencePtr GbkParser::readSequence()
         seq.clear();
     }
     else {
+        makeRealExons(seq);
         fillIntronsAndExonsFromOrigin(seq);
     }
+
     return seq;
 }
 
@@ -650,6 +652,30 @@ void GbkParser::fillIntronsAndExonsFromOrigin(SequencePtr seq)
         Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
             fillIntronsAndExonsFromOrigin(isoform, origin);
         }
+    }
+}
+
+ bool exonLessThan(const ExonPtr v1, const ExonPtr v2)
+ {
+    if (v1->start < v2->start) return true;
+    if (v1->start > v2->start) return false;
+
+    if (v1->end < v2->end) return true;
+    if (v1->end > v2->end) return false;
+    return true;
+ }
+
+void GbkParser::makeRealExons(SequencePtr seq)
+{
+    Q_FOREACH(GenePtr gene, seq->genes) {
+        QList<ExonPtr> exons;
+        QList<RealExonPtr> real_exons;
+        Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+            Q_FOREACH(ExonPtr exon, isoform->exons) {
+                exons.push_back(exon);
+            };
+        }
+        qSort(exons.begin(), exons.end(), exonLessThan);
     }
 }
 

@@ -229,58 +229,58 @@ void Worker::processOneFile()
 int main(int argc, char *argv[])
 {
 
-    // QList<RealExonPtr>  exons;
-    // RealExonPtr exon1(new RealExon);
-    // RealExonPtr exon2(new RealExon);
-    // RealExonPtr exon3(new RealExon);
-    // RealExonPtr exon4(new RealExon);
-    // exon4->start = 0;
-    // exon4->end = 10;
-    // exon3->start = 0;
-    // exon3->end = 15;
-    // exon2->start = 4;
-    // exon2->end = 7;
-    // exon1->start = 4;
-    // exon1->end = 10;
-    // exons.push_back(exon1);
-    // exons.push_back(exon2);
-    // exons.push_back(exon3);
-    // exons.push_back(exon4);
+    QList<RealExonPtr>  exons;
+    RealExonPtr exon1(new RealExon);
+    RealExonPtr exon2(new RealExon);
+    RealExonPtr exon3(new RealExon);
+    RealExonPtr exon4(new RealExon);
+    exon4->start = 0;
+    exon4->end = 10;
+    exon3->start = 0;
+    exon3->end = 15;
+    exon2->start = 4;
+    exon2->end = 7;
+    exon1->start = 4;
+    exon1->end = 10;
+    exons.push_back(exon1);
+    exons.push_back(exon2);
+    exons.push_back(exon3);
+    exons.push_back(exon4);
 
-    // qSort(exons.begin(), exons.end(), variantLessThan);
+    qSort(exons.begin(), exons.end(), variantLessThan);
 
-    // for( int i=0; i<exons.count(); ++i ){
-    //     qDebug() << exons[i]->start << " : " << exons[i]->end;
-    // };
+    for( int i=0; i<exons.count(); ++i ){
+        qDebug() << exons[i]->start << " : " << exons[i]->end;
+    };
 
-    QCoreApplication a(argc, argv);
+    // QCoreApplication a(argc, argv);
 
-    const Arguments args = parseArguments();
-    Logger::init(args.loggerFileName);
+    // const Arguments args = parseArguments();
+    // Logger::init(args.loggerFileName);
 
-    const quint32 filesPerWorker = args.sourceFileNames.size() / args.maxThreads;
+    // const quint32 filesPerWorker = args.sourceFileNames.size() / args.maxThreads;
 
-    QList<Worker*> pool;
+    // QList<Worker*> pool;
 
-    for (quint16 threadNo = 0; threadNo < args.maxThreads; ++threadNo) {
-        int start = threadNo * filesPerWorker;
-        int end = start + filesPerWorker;
-        if (args.maxThreads-1 == threadNo) {
-            end = args.sourceFileNames.size();
-        }
-        Worker * worker = new Worker(args, start, end);
-        worker->start();
-        pool.append(worker);
-    }
+    // for (quint16 threadNo = 0; threadNo < args.maxThreads; ++threadNo) {
+    //     int start = threadNo * filesPerWorker;
+    //     int end = start + filesPerWorker;
+    //     if (args.maxThreads-1 == threadNo) {
+    //         end = args.sourceFileNames.size();
+    //     }
+    //     Worker * worker = new Worker(args, start, end);
+    //     worker->start();
+    //     pool.append(worker);
+    // }
 
-    Q_FOREACH(Worker * worker, pool) {
-        worker->launch();
-    }
+    // Q_FOREACH(Worker * worker, pool) {
+    //     worker->launch();
+    // }
 
-    Q_FOREACH(Worker * worker, pool) {
-        worker->wait();
-        delete worker;
-    }
+    // Q_FOREACH(Worker * worker, pool) {
+    //     worker->wait();
+    //     delete worker;
+    // }
 
     return 0;
 }
