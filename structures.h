@@ -266,7 +266,7 @@ struct Exon {
     quint8          lengthPhase = 0;
     quint32         index = 0;
     quint32         revIndex = 0;
-    RealExonWPtr    realExon;
+    RealExonWPtr     realExon;
     QByteArray      startCodon;
     QByteArray      endCodon;
     IntronWPtr      prevIntron;
