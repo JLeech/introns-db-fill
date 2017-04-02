@@ -229,23 +229,23 @@ void Worker::processOneFile()
 int main(int argc, char *argv[])
 {
 
-    QList<RealExonPtr>  exons;
-    RealExonPtr exon1(new RealExon);
-    RealExonPtr exon2(new RealExon);
-    RealExonPtr exon3(new RealExon);
-    RealExonPtr exon4(new RealExon);
-    exon4->start = 0;
-    exon4->end = 10;
-    exon3->start = 0;
-    exon3->end = 15;
-    exon2->start = 4;
-    exon2->end = 7;
-    exon1->start = 4;
-    exon1->end = 10;
-    exons.push_back(exon1);
-    exons.push_back(exon2);
-    exons.push_back(exon3);
-    exons.push_back(exon4);
+    // QList<RealExonPtr>  exons;
+    // RealExonPtr exon1(new RealExon);
+    // RealExonPtr exon2(new RealExon);
+    // RealExonPtr exon3(new RealExon);
+    // RealExonPtr exon4(new RealExon);
+    // exon4->start = 0;
+    // exon4->end = 10;
+    // exon3->start = 0;
+    // exon3->end = 15;
+    // exon2->start = 4;
+    // exon2->end = 7;
+    // exon1->start = 4;
+    // exon1->end = 10;
+    // exons.push_back(exon1);
+    // exons.push_back(exon2);
+    // exons.push_back(exon3);
+    // exons.push_back(exon4);
 
     qSort(exons.begin(), exons.end(), variantLessThan);
 
