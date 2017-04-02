@@ -46,6 +46,7 @@ private:
                                const QList<quint32> ends);
 
     static QByteArray dnaReverseComplement(const QByteArray & origin, int start, int end);
+    void makeRealExons(SequencePtr seq);
     void fillIntronsAndExonsFromOrigin(SequencePtr seq);
     void fillIntronsAndExonsFromOrigin(IsoformPtr isoform, const QByteArray & origin);
 
