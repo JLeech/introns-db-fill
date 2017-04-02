@@ -936,7 +936,9 @@ void Database::addGene(GenePtr gene)
             // }
         }
     }
-    qDebug() << exons_count << " : " << max_real_exons.size();
+    if( (exons_count - max_real_exons.size()) != 0){
+        qDebug() << exons_count << " : " << max_real_exons.size();
+    }
 }
 
 void Database::addIsoform(IsoformPtr isoform)
