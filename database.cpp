@@ -857,6 +857,14 @@ QString Database::format60(const QString &s)
     return result;
 }
 
+bool exonLessThan(const ExonPtr v1, const ExonPtr v2)
+{
+   if (v1->start < v2->start) return true;
+   if (v1->start > v2->start) return false;
+   if (v1->end < v2->end) return true;
+   if (v1->end > v2->end) return false;
+   return true;
+}
 
 void Database::addGene(GenePtr gene)
 {
@@ -916,6 +924,16 @@ void Database::addGene(GenePtr gene)
     else {
         gene->id = query.lastInsertId().toInt();
     }
+
+    QList<RealExonPtr> exons;
+    
+    Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+        Q_FOREACH(ExonPtr exon, isoform->exons) {
+            exons.push_back(exon);
+        };
+    };
+
+    qSort(exons.begin(), exons.end(), exonLessThan);
 
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         addIsoform(isoform);

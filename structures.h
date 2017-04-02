@@ -81,12 +81,6 @@ struct IntronType {
     QString         representation;
 };
 
-struct RealExon {
-    quint32         start = 0;
-    quint32         end = 0;
-};
-
-
 struct TaxKingdom {
     qint32          id = 0;
     QString         name;
@@ -243,6 +237,19 @@ struct Isoform {
 };
 
 
+struct RealExon{
+    qint32          id = 0;
+    IsoformWPtr     isoform;
+    GeneWPtr        gene;
+    SequenceWPtr    sequence;
+    quint32         start = 0;
+    quint32         end = 0;
+    QByteArray      startCodon;
+    QByteArray      endCodon;
+    
+    bool            errorInPseudoFlag = false;
+    bool            errorNInSequence = false;
+};
 
 struct Exon {
     qint32          id = 0;

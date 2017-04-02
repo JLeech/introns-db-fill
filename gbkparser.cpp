@@ -511,6 +511,8 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     }
 }
 
+
+
 void GbkParser::createIntronsAndExons(IsoformPtr isoform,
                                       bool rna, bool bw,
                                       const QList<quint32> &starts,

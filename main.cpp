@@ -224,15 +224,7 @@ void Worker::processOneFile()
     }
 }
 
- bool variantLessThan(const RealExonPtr v1, const RealExonPtr v2)
- {
-    if (v1->start < v2->start) return true;
-    if (v1->start > v2->start) return false;
 
-    if (v1->end < v2->end) return true;
-    if (v1->end > v2->end) return false;
-    return true;
- }
 
 int main(int argc, char *argv[])
 {
