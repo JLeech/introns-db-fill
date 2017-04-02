@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
     // exons.push_back(exon3);
     // exons.push_back(exon4);
 
-    qSort(exons.begin(), exons.end(), variantLessThan);
+    // qSort(exons.begin(), exons.end(), variantLessThan);
 
     for( int i=0; i<exons.count(); ++i ){
         qDebug() << exons[i]->start << " : " << exons[i]->end;
