@@ -686,6 +686,7 @@ void GbkParser::makeRealExons(SequencePtr seq)
                 if ((int(exon->start) != current_start) || (int(exon->end) != current_end)){
                     RealExonPtr real_exon(new RealExon);
                     real_exon->id = current_id;
+                    qDebug() << "id: " << real_exon->id;
                     real_exon->start = exon->start;
                     real_exon->end = exon->end;
                     current_start = exon->start;
