@@ -923,11 +923,12 @@ void Database::addGene(GenePtr gene)
     }
 
     int exons_count = 0;
-    int max_real_exon = 0;
+    QSet<quint32> max_real_exons;
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         Q_FOREACH(ExonPtr exon, isoform->exons){
             exons_count += 1;
-
+            max_real_exons << exon->real_exon_index;
+            // max_real_exons.push_back(exon->real_exon_index);
             // int cur_id = exon->realExon.toStrongRef()->start;
             // qDebug() << "id: " << exon->realExon.toStrongRef()->start;
             // if (cur_id > max_real_exon){
@@ -935,7 +936,7 @@ void Database::addGene(GenePtr gene)
             // }
         }
     }
-    //qDebug() << exons_count << " : " << max_real_exon;
+    qDebug() << exons_count << " : " << max_real_exon.size();
 }
 
 void Database::addIsoform(IsoformPtr isoform)
