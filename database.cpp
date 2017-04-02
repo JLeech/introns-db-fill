@@ -929,7 +929,7 @@ void Database::addGene(GenePtr gene)
             exons_count += 1;
 
             // int cur_id = exon->realExon.toStrongRef()->start;
-            qDebug() << "id: " << exon->realExon.toStrongRef()->start;
+            // qDebug() << "id: " << exon->realExon.toStrongRef()->start;
             // if (cur_id > max_real_exon){
             //     max_real_exon = cur_id;
             // }
