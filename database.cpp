@@ -925,7 +925,7 @@ void Database::addGene(GenePtr gene)
         gene->id = query.lastInsertId().toInt();
     }
 
-    QList<RealExonPtr> exons;
+    QList<ExonPtr> exons;
     
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         Q_FOREACH(ExonPtr exon, isoform->exons) {
