@@ -678,15 +678,17 @@ void GbkParser::makeRealExons(SequencePtr seq)
         qSort(exons.begin(), exons.end(), exonLessThan);
         int current_start = 0;
         int current_end = 0;
-        Q_FOREACH(ExonPtr exon, isoform->exons) {
-            if ((exon->start != current_start) || (exon->end != current_end)){
-                RealExonPtr real_exon(new RealExon);
-                real_exon->start = exon->start;
-                real_exon->end = exon->end;
-                current_start = exon->start;
-                current_end = exon->end;
+        Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+            Q_FOREACH(ExonPtr exon, isoform->exons) {
+                if ((exon->start != current_start) || (exon->end != current_end)){
+                    RealExonPtr real_exon(new RealExon);
+                    real_exon->start = exon->start;
+                    real_exon->end = exon->end;
+                    current_start = exon->start;
+                    current_end = exon->end;
+                }
+                exon->realExon = real_exon;
             }
-            exon->realExon = real_exon;
         }
     }
 }
