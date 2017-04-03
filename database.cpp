@@ -950,7 +950,7 @@ void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_has
     quint32 current_id = 0;
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         if(exon_hash.contains(exon->real_exon_index)){
-            exon->real_exon_index = exon_hash[exon->real_exon_index]
+            exon->real_exon_index = exon_hash[exon->real_exon_index];
         }else{
             QSqlQuery query("", *_db);
             query.prepare("INSERT INTO real_exons("
