@@ -920,7 +920,7 @@ void Database::addGene(GenePtr gene)
 
     QHash<quint32, quint32> real_exon_hash;
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
-        addRealExons(isoform, real_exon_hash);
+        addRealExons(isoform, &real_exon_hash);
         qDebug() << real_exon_hash.size();
     }
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
@@ -946,7 +946,7 @@ void Database::addGene(GenePtr gene)
     // }
 }
 
-void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_hash){
+void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> * exon_hash){
     quint32 current_id = 0;
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         if(exon_hash.contains(exon->real_exon_index)){
