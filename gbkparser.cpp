@@ -698,6 +698,8 @@ void GbkParser::makeRealExons(SequencePtr seq)
                 }else{
                     current_id++;
                     exon->real_exon_index = current_id;
+                    current_start = exon->start;
+                    current_end = exon->end;            
                 }
                 
                 // qDebug() << "I: " << exon->realExon.toStrongRef()->start;
