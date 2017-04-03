@@ -234,7 +234,7 @@ create TABLE real_exons(
     id_sequences INT NOT NULL,
     
     startt INT NOT NULL,
-    endd INT NOT NULL,
+    endd INT NOT NULL
 );
 
 create TABLE introns(
