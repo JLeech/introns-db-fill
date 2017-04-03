@@ -683,11 +683,10 @@ void GbkParser::makeRealExons(SequencePtr seq)
         Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
             Q_FOREACH(ExonPtr exon, isoform->exons) {
                 if ((int(exon->start) == current_start) && (int(exon->end) == current_end)){
-                    exon->real_exon_index = current_id;
-                    qDebug() << "MATCH";
+                    exon->real_exon_id = current_id;
                 }else{
                     current_id++;
-                    exon->real_exon_index = current_id;
+                    exon->real_exon_id = current_id;
                     current_start = exon->start;
                     current_end = exon->end;            
                 }

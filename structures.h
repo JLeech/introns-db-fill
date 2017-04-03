@@ -242,6 +242,7 @@ struct Exon {
     IsoformWPtr     isoform;
     GeneWPtr        gene;
     SequenceWPtr    sequence;
+    quint32         real_exon_id;
     quint32         start = 0;
     quint32         end = 0;
     enum Type {
@@ -252,7 +253,6 @@ struct Exon {
     quint8          lengthPhase = 0;
     quint32         index = 0;
     quint32         revIndex = 0;
-    quint32         real_exon_index;
     QByteArray      startCodon;
     QByteArray      endCodon;
     IntronWPtr      prevIntron;

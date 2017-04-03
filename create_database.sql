@@ -208,7 +208,8 @@ create TABLE exons(
     id_isoforms INT NOT NULL,
     id_genes INT NOT NULL,
     id_sequences INT NOT NULL,
-
+    real_exon_id INT NOT NULL,
+    
     startt INT NOT NULL,
     endd INT NOT NULL,
     lengthh INT,

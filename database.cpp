@@ -838,7 +838,6 @@ void Database::storeTranslation(IsoformPtr isoform)
     ts << "> " << geneName << "(genes id: " << gene->id <<") | " << protName << "\n";
     ts << format60(isoform->translation) << "\n\n";
     translationFile.close();
-
 }
 
 QString Database::format60(const QString &s)
@@ -921,7 +920,6 @@ void Database::addGene(GenePtr gene)
     QHash<quint32, quint32> real_exon_hash;
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         addRealExons(isoform, real_exon_hash);
-        qDebug() << real_exon_hash.size();
     }
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         addIsoform(isoform);
@@ -948,8 +946,8 @@ void Database::addGene(GenePtr gene)
 
 void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> & exon_hash){
     Q_FOREACH(ExonPtr exon, isoform->exons) {
-        if(exon_hash.contains(exon->real_exon_index)){
-            exon->real_exon_index = exon_hash[exon->real_exon_index];
+        if(exon_hash.contains(exon->real_exon_id)){
+            exon->real_exon_id = exon_hash[exon->real_exon_id];
         }else{
             QSqlQuery query("", *_db);
             query.prepare("INSERT INTO real_exons("
@@ -975,7 +973,9 @@ void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> & exon_h
                 return;
             }
             else {
-                exon_hash[exon->real_exon_index] = query.lastInsertId().toInt();
+                int real_exon_id = query.lastInsertId().toInt();
+                exon_hash[exon->real_exon_id] = real_exon_id;
+                exon->real_exon_id = real_exon_id;
             }
         }
     }
@@ -1348,6 +1348,7 @@ void Database::addCodingExon(ExonPtr exon)
                   "id_isoforms"
                   ", id_genes"
                   ", id_sequences"
+                  ", real_exon_id"
                   ", startt"
                   ", endd"
                   ", lengthh"
@@ -1365,6 +1366,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ":id_isoforms"
                   ", :id_genes"
                   ", :id_sequences"
+                  ", :real_exon_id"
                   ", :startt"
                   ", :endd"
                   ", :lengthh"
@@ -1382,6 +1384,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":id_isoforms", isoformId);
     query.bindValue(":id_genes", geneId);
     query.bindValue(":id_sequences", seqId);
+    query.bindValue(":real_exon_id", exon->real_exon_id);
     query.bindValue(":startt", exon->start);
     query.bindValue(":endd", exon->end);
     query.bindValue(":lengthh", exon->end - exon->start + 1);
@@ -1391,6 +1394,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":length_phase", exon->lengthPhase);
     query.bindValue(":indexx", exon->index);
     query.bindValue(":rev_index", exon->revIndex);
+    query.bindValue(":rev_index", exon->real_exon_index);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
     query.bindValue(":error_in_pseudo_flag", exon->errorInPseudoFlag);
