@@ -927,29 +927,29 @@ void Database::addGene(GenePtr gene)
         addIsoform(isoform);
     }
 
-    int exons_count = 0;
-    QSet<quint32> max_real_exons;
-    Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
-        Q_FOREACH(ExonPtr exon, isoform->exons){
-            exons_count += 1;
-            max_real_exons << exon->real_exon_index;
-            // max_real_exons.push_back(exon->real_exon_index);
-            // int cur_id = exon->realExon.toStrongRef()->start;
-            // qDebug() << "id: " << exon->realExon.toStrongRef()->start;
-            // if (cur_id > max_real_exon){
-            //     max_real_exon = cur_id;
-            // }
-        }
-    }
-    if( (exons_count - max_real_exons.size()) != 0){
-        qDebug() << exons_count << " : " << max_real_exons.size();
-    }
+    // int exons_count = 0;
+    // QSet<quint32> max_real_exons;
+    // Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+    //     Q_FOREACH(ExonPtr exon, isoform->exons){
+    //         exons_count += 1;
+    //         max_real_exons << exon->real_exon_index;
+    //         max_real_exons.push_back(exon->real_exon_index);
+    //         int cur_id = exon->realExon.toStrongRef()->start;
+    //         qDebug() << "id: " << exon->realExon.toStrongRef()->start;
+    //         if (cur_id > max_real_exon){
+    //             max_real_exon = cur_id;
+    //         }
+    //     }
+    // }
+    // if( (exons_count - max_real_exons.size()) != 0){
+    //     qDebug() << exons_count << " : " << max_real_exons.size();
+    // }
 }
 
 void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_hash){
     quint32 current_id = 0;
     Q_FOREACH(ExonPtr exon, isoform->exons) {
-        if(hash.contains(exon->real_exon_index)){
+        if(exon_hash.contains(exon->real_exon_index)){
             exon->real_exon_index = exon_hash[exon->real_exon_index]
         }else{
             QSqlQuery query("", *_db);
@@ -976,7 +976,7 @@ void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_has
                 return;
             }
             else {
-                hash[exon->real_exon_index] = query.lastInsertId().toInt();
+                exon_hash[exon->real_exon_index] = query.lastInsertId().toInt();
             }
         }
     }
