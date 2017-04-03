@@ -1394,7 +1394,6 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":length_phase", exon->lengthPhase);
     query.bindValue(":indexx", exon->index);
     query.bindValue(":rev_index", exon->revIndex);
-    query.bindValue(":rev_index", exon->real_exon_index);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
     query.bindValue(":error_in_pseudo_flag", exon->errorInPseudoFlag);
