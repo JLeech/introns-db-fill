@@ -42,7 +42,7 @@ public:
   void addGene(GenePtr gene);
   void addIsoform(IsoformPtr isoform);
   
-  void addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_hash);
+  void addRealExons(IsoformPtr isoform, QHash<quint32, quint32> & exon_hash);
 
   void addExons(IsoformPtr isoform);
   void addIntrons(IsoformPtr isoform);
