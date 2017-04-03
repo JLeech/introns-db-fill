@@ -682,7 +682,7 @@ void GbkParser::makeRealExons(SequencePtr seq)
         
         Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
             Q_FOREACH(ExonPtr exon, isoform->exons) {
-                if ((int(exon->start) != current_start) || (int(exon->end) != current_end)){
+                if ((int(exon->start) == current_start) && (int(exon->end) == current_end)){
 
                 //     RealExonPtr real_exon(new RealExon);
                 //     real_exon->id = current_id;
@@ -693,8 +693,13 @@ void GbkParser::makeRealExons(SequencePtr seq)
                 //     current_end = exon->end;
                     current_id++;
                 //     exon->realExon = real_exon;
+                    exon->real_exon_index = current_id;
+                    qDebug() << "MATCH";
+                }else{
+                    current_id++;
+                    exon->real_exon_index = current_id;
                 }
-                exon->real_exon_index = current_id;
+                
                 // qDebug() << "I: " << exon->realExon.toStrongRef()->start;
                  
             }
