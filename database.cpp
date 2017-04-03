@@ -947,7 +947,6 @@ void Database::addGene(GenePtr gene)
 }
 
 void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> & exon_hash){
-    quint32 current_id = 0;
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         if(exon_hash.contains(exon->real_exon_index)){
             exon->real_exon_index = exon_hash[exon->real_exon_index];
