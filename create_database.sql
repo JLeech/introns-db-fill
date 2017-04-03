@@ -235,7 +235,7 @@ create TABLE real_exons(
     
     startt INT NOT NULL,
     endd INT NOT NULL,
-)
+);
 
 create TABLE introns(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
