@@ -918,6 +918,11 @@ void Database::addGene(GenePtr gene)
         gene->id = query.lastInsertId().toInt();
     }
 
+    QHash<quint32, quint32> real_exon_hash;
+    Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+        addRealExons(isoform, real_exon_hash);
+        qDebug() << real_exon_hash.size();
+    }
     Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
         addIsoform(isoform);
     }
@@ -940,6 +945,43 @@ void Database::addGene(GenePtr gene)
         qDebug() << exons_count << " : " << max_real_exons.size();
     }
 }
+
+void Database::addRealExons(IsoformPtr isoform, QHash<quint32, quint32> exon_hash){
+    quint32 current_id = 0;
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        if(hash.contains(exon->real_exon_index)){
+            exon->real_exon_index = exon_hash[exon->real_exon_index]
+        }else{
+            QSqlQuery query("", *_db);
+            query.prepare("INSERT INTO real_exons("
+                          "id_genes"
+                          ", id_sequences"
+                          ", startt"
+                          ", endd"
+                          ") VALUES("
+                          ":id_genes"
+                          ", :id_sequences"
+                          ", :startt"
+                          ", :endd"
+                          ")"
+            );
+            query.bindValue(":id_genes", isoform->gene.toStrongRef()->id);
+            query.bindValue(":id_sequences", isoform->sequence.toStrongRef()->id);
+            query.bindValue(":startt", exon->start);
+            query.bindValue(":endd", exon->end);
+            if (!query.exec()) {
+                qWarning() << query.lastError();
+                qWarning() << query.lastError().text();
+                qWarning() << query.lastQuery();
+                return;
+            }
+            else {
+                hash[exon->real_exon_index] = query.lastInsertId().toInt();
+            }
+        }
+    }
+}
+
 
 void Database::addIsoform(IsoformPtr isoform)
 {
