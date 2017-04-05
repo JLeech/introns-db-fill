@@ -501,6 +501,9 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
 
     if ("CDS" == prefix) {
         qDebug() << attrs.keys();
+        if (attrs.contains("codon_start")){
+            qDebug() << attrs["codon_start"];
+        };
         createIntronsAndExons(targetIsoform,
                               false,
                               bw,
