@@ -674,11 +674,24 @@ void GbkParser::checkIsoformError(IsoformPtr isoform){
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         full_exons += exon->origin;
     };
-    if (full_exons.contains(taa) || full_exons.contains(tag) || full_exons.contains(tga)){
-        // qDebug() << "CONTAINS!";
-        // qDebug() << full_exons;
-        // qDebug() << "-----------------";
-        isoform->errorMain = true;
+    for(int i=0; i<full_exons.size(); i+=3){
+        break if (i+3 >= full_exons.size());
+        if(full_exons[i]=='T'){
+            if(full_exons[i+1]=='A'){
+                if((full_exons[i+2]=='A')||(full_exons[i+2]=='G')){
+                    qDebug() << "----------------";
+                    qDebug() << full_exons;
+                    qDebug() << "----------------";
+                    isoform->errorMain = true;
+                }
+            };
+            if ((full_exons[i+1]=='G')&&(full_exons[i+2]=='A')){
+                qDebug() << "----------------";
+                qDebug() << full_exons;
+                qDebug() << "----------------";
+                isoform->errorMain = true;
+            }  
+        }
     }
 }
 
