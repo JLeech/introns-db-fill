@@ -220,8 +220,8 @@ struct Isoform {
     bool            errorInLength = false;
     bool            errorInStartCodon = false;
     bool            errorInEndCodon = false;
-    bool            errorInIntron = false;
-    bool            errorInCodingExon = false;
+    bool            warningInIntron = false;
+    bool            warningInCodingExon = false;
     bool            errorMain = false;
     QString         errorComment;
     bool            isMaximumByIntrons = false;
@@ -259,8 +259,8 @@ struct Exon {
     IntronWPtr      nextIntron;
     QByteArray      origin;
 
-    bool            errorInPseudoFlag = false;
-    bool            errorNInSequence = false;
+    bool            warningInPseudoFlag = false;
+    bool            warningNInSequence = false;
 };
 
 
@@ -279,8 +279,8 @@ struct Intron {
     quint32         revIndex = 0;
     quint8          lengthPhase = 0;
     quint8          phase = 0;
-    bool            errorInStartDinucleotide = false;
-    bool            errorInEndDinucleotide = false;
+    bool            warningInStartDinucleotide = false;
+    bool            warningInEndDinucleotide = false;
     bool            errorMain = false;
     bool            warningNInSequence = false;
     qint32          intronTypeId = 0;

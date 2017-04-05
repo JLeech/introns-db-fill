@@ -747,10 +747,10 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
 
         exon->startCodon = exon->origin.left(3);
         exon->endCodon = exon->origin.right(3);
-        exon->errorNInSequence = exon->origin.contains('N');
-        if (exon->errorNInSequence) {
-            exon->isoform.toStrongRef()->errorInCodingExon = true;
-            exon->isoform.toStrongRef()->errorMain = true;
+        exon->warningNInSequence = exon->origin.contains('N');
+        if (exon->warningNInSequence) {
+            exon->isoform.toStrongRef()->warningInCodingExon = true;
+            // exon->isoform.toStrongRef()->errorMain = true;
         }
     }
 
@@ -767,15 +767,15 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         intron->startDinucleotide = intron->origin.left(2);
         intron->endDinucleotide = intron->origin.right(2);
 
-        intron->errorInStartDinucleotide = "GT" != intron->startDinucleotide;
-        intron->errorInEndDinucleotide = "AG" != intron->endDinucleotide;
+        intron->warningInStartDinucleotide = "GT" != intron->startDinucleotide;
+        intron->warningInEndDinucleotide = "AG" != intron->endDinucleotide;
         intron->errorMain =
                 intron->errorMain ||
-                intron->errorInStartDinucleotide ||
-                intron->errorInEndDinucleotide;
+                intron->warningInStartDinucleotide ||
+                intron->warningInEndDinucleotide;
         if (intron->errorMain) {
-            intron->isoform.toStrongRef()->errorInIntron = true;
-            intron->isoform.toStrongRef()->errorMain = true;
+            intron->isoform.toStrongRef()->warningInIntron = true;
+            // intron->isoform.toStrongRef()->errorMain = true;
         }
         intron->warningNInSequence = intron->origin.contains('N');
     }

@@ -44,8 +44,8 @@ private:
     void createIntronsAndExons(IsoformPtr isoform, bool rna, bool bw,
                                const QList<quint32> & starts,
                                const QList<quint32> ends);
-    void GbkParser::checkIsoformsMainErrors(SequencePtr seq);
-    void GbkParser::checkIsoformError(IsoformPtr isoform);
+    void checkIsoformsMainErrors(SequencePtr seq);
+    void checkIsoformError(IsoformPtr isoform);
 
     static QByteArray dnaReverseComplement(const QByteArray & origin, int start, int end);
     void makeRealExons(SequencePtr seq);

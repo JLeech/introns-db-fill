@@ -1022,8 +1022,8 @@ void Database::addIsoform(IsoformPtr isoform)
                   ", error_in_length"
                   ", error_in_start_codon"
                   ", error_in_end_codon"
-                  ", error_in_intron"
-                  ", error_in_coding_exon"
+                  ", warning_in_intron"
+                  ", warning_in_coding_exon"
                   ", error_main"
                   ") VALUES("
                   ":id_genes"
@@ -1047,8 +1047,8 @@ void Database::addIsoform(IsoformPtr isoform)
                   ", :error_in_length"
                   ", :error_in_start_codon"
                   ", :error_in_end_codon"
-                  ", :error_in_intron"
-                  ", :error_in_coding_exon"
+                  ", :warning_in_intron"
+                  ", :warning_in_coding_exon"
                   ", :error_main"
                   ")");
     query.bindValue(":id_genes", geneId);
@@ -1074,8 +1074,8 @@ void Database::addIsoform(IsoformPtr isoform)
     query.bindValue(":error_in_length", isoform->errorInLength);
     query.bindValue(":error_in_start_codon", isoform->errorInStartCodon);
     query.bindValue(":error_in_end_codon", isoform->errorInEndCodon);
-    query.bindValue(":error_in_intron", isoform->errorInIntron);
-    query.bindValue(":error_in_coding_exon", isoform->errorInCodingExon);
+    query.bindValue(":warning_in_intron", isoform->warningInIntron);
+    query.bindValue(":warning_in_coding_exon", isoform->warningInCodingExon);
     query.bindValue(":error_main", isoform->errorMain);
     //qDebug() << (isoform->exons.length() == 0);
     // QFile f("/home/introns/ftp_loader/log.log");
@@ -1134,8 +1134,8 @@ void Database::addExons(IsoformPtr isoform)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
-                  ", error_in_pseudo_flag"
-                  ", error_n_in_sequence"
+                  ", warning_in_pseudo_flag"
+                  ", warning_n_in_sequence"
                   ") VALUES("
                   ":id_isoforms"
                   ", :id_genes"
@@ -1151,8 +1151,8 @@ void Database::addExons(IsoformPtr isoform)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
-                  ", :error_in_pseudo_flag"
-                  ", :error_n_in_sequence"
+                  ", :warning_in_pseudo_flag"
+                  ", :warning_n_in_sequence"
                   ")");
     
     QVariantList id_isoforms_list;
@@ -1169,8 +1169,8 @@ void Database::addExons(IsoformPtr isoform)
     QVariantList rev_index_list;
     QVariantList start_codon_list;
     QVariantList end_codon_list;
-    QVariantList error_in_pseudo_flag_list;
-    QVariantList error_n_in_sequence_list;
+    QVariantList warning_in_pseudo_flag_list;
+    QVariantList warning_n_in_sequence_list;
 
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         id_isoforms_list <<   isoformId;
@@ -1187,8 +1187,8 @@ void Database::addExons(IsoformPtr isoform)
         rev_index_list <<   exon->revIndex;
         start_codon_list <<   exon->startCodon;
         end_codon_list <<   exon->endCodon;
-        error_in_pseudo_flag_list <<   exon->errorInPseudoFlag;
-        error_n_in_sequence_list   <<  exon->errorNInSequence ;
+        warning_in_pseudo_flag_list <<   exon->warningInPseudoFlag;
+        warning_n_in_sequence_list   <<  exon->warningNInSequence ;
     }
 
      query.bindValue(":id_isoforms", id_isoforms_list);
@@ -1205,8 +1205,8 @@ void Database::addExons(IsoformPtr isoform)
      query.bindValue(":rev_index", rev_index_list);
      query.bindValue(":start_codon", start_codon_list);
      query.bindValue(":end_codon", end_codon_list);
-     query.bindValue(":error_in_pseudo_flag", error_in_pseudo_flag_list);
-     query.bindValue(":error_n_in_sequence", error_n_in_sequence_list);
+     query.bindValue(":warning_in_pseudo_flag", warning_in_pseudo_flag_list);
+     query.bindValue(":warning_n_in_sequence", warning_n_in_sequence_list);
 
     if (!query.execBatch()) {
         qWarning() << query.lastError();
@@ -1240,8 +1240,8 @@ void Database::addIntrons(IsoformPtr isoform)
                   ", rev_index"
                   ", length_phase"
                   ", phase"
-                  ", error_start_dinucleotide"
-                  ", error_end_dinucleotide"
+                  ", warning_start_dinucleotide"
+                  ", warning_end_dinucleotide"
                   ", error_main"
                   ", warning_n_in_sequence"
                   ") VALUES("
@@ -1260,8 +1260,8 @@ void Database::addIntrons(IsoformPtr isoform)
                   ", :rev_index"
                   ", :length_phase"
                   ", :phase"
-                  ", :error_start_dinucleotide"
-                  ", :error_end_dinucleotide"
+                  ", :warning_start_dinucleotide"
+                  ", :warning_end_dinucleotide"
                   ", :error_main"
                   ", :warning_n_in_sequence"
                   ")");
@@ -1281,8 +1281,8 @@ void Database::addIntrons(IsoformPtr isoform)
     QVariantList rev_index_list;
     QVariantList length_phase_list;
     QVariantList phase_list;
-    QVariantList error_start_dinucleotide_list;
-    QVariantList error_end_dinucleotide_list;
+    QVariantList warning_start_dinucleotide_list;
+    QVariantList warning_end_dinucleotide_list;
     QVariantList error_main_list;
     QVariantList warning_n_in_sequence_list;
 
@@ -1303,8 +1303,8 @@ void Database::addIntrons(IsoformPtr isoform)
         rev_index_list << rev_index;
         length_phase_list <<  intron->lengthPhase;
         phase_list <<  intron->phase;
-        error_start_dinucleotide_list <<  intron->errorInStartDinucleotide;
-        error_end_dinucleotide_list <<  intron->errorInEndDinucleotide;
+        warning_start_dinucleotide_list <<  intron->warningInStartDinucleotide;
+        warning_end_dinucleotide_list <<  intron->warningInEndDinucleotide;
         error_main_list <<  intron->errorMain;
         warning_n_in_sequence_list <<  intron->warningNInSequence;
     }
@@ -1324,8 +1324,8 @@ void Database::addIntrons(IsoformPtr isoform)
     query.bindValue(":rev_index",rev_index_list);
     query.bindValue(":length_phase",length_phase_list);
     query.bindValue(":phase",phase_list);
-    query.bindValue(":error_start_dinucleotide",error_start_dinucleotide_list);
-    query.bindValue(":error_end_dinucleotide",error_end_dinucleotide_list);
+    query.bindValue(":warning_start_dinucleotide",warning_start_dinucleotide_list);
+    query.bindValue(":warning_end_dinucleotide",warning_end_dinucleotide_list);
     query.bindValue(":error_main",error_main_list);
     query.bindValue(":warning_n_in_sequence",warning_n_in_sequence_list);
 
@@ -1360,8 +1360,8 @@ void Database::addCodingExon(ExonPtr exon)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
-                  ", error_in_pseudo_flag"
-                  ", error_n_in_sequence"
+                  ", warning_in_pseudo_flag"
+                  ", warning_n_in_sequence"
                   ") VALUES("
                   ":id_isoforms"
                   ", :id_genes"
@@ -1378,8 +1378,8 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
-                  ", :error_in_pseudo_flag"
-                  ", :error_n_in_sequence"
+                  ", :warning_in_pseudo_flag"
+                  ", :warning_n_in_sequence"
                   ")");
     query.bindValue(":id_isoforms", isoformId);
     query.bindValue(":id_genes", geneId);
@@ -1396,8 +1396,8 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":rev_index", exon->revIndex);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
-    query.bindValue(":error_in_pseudo_flag", exon->errorInPseudoFlag);
-    query.bindValue(":error_n_in_sequence", exon->errorNInSequence);
+    query.bindValue(":warning_in_pseudo_flag", exon->warningInPseudoFlag);
+    query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
 
     if (!query.exec()) {
         qWarning() << query.lastError();
@@ -1432,8 +1432,8 @@ void Database::addIntron(IntronPtr intron)
                   ", rev_index"
                   ", length_phase"
                   ", phase"
-                  ", error_start_dinucleotide"
-                  ", error_end_dinucleotide"
+                  ", warning_start_dinucleotide"
+                  ", warning_end_dinucleotide"
                   ", error_main"
                   ", warning_n_in_sequence"
                   ") VALUES("
@@ -1452,8 +1452,8 @@ void Database::addIntron(IntronPtr intron)
                   ", :rev_index"
                   ", :length_phase"
                   ", :phase"
-                  ", :error_start_dinucleotide"
-                  ", :error_end_dinucleotide"
+                  ", :warning_start_dinucleotide"
+                  ", :warning_end_dinucleotide"
                   ", :error_main"
                   ", :warning_n_in_sequence"
                   ")");
@@ -1474,8 +1474,8 @@ void Database::addIntron(IntronPtr intron)
     query.bindValue(":rev_index", UINT32_MAX == intron->revIndex ? 0 : intron->revIndex);
     query.bindValue(":length_phase", intron->lengthPhase);
     query.bindValue(":phase", intron->phase);
-    query.bindValue(":error_start_dinucleotide", intron->errorInStartDinucleotide);
-    query.bindValue(":error_end_dinucleotide", intron->errorInEndDinucleotide);
+    query.bindValue(":warning_start_dinucleotide", intron->warningInStartDinucleotide);
+    query.bindValue(":warning_end_dinucleotide", intron->warningInEndDinucleotide);
     query.bindValue(":error_main", intron->errorMain);
     query.bindValue(":warning_n_in_sequence", intron->warningNInSequence);
 

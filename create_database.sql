@@ -197,8 +197,8 @@ create TABLE isoforms(
     error_in_length BOOLEAN NOT NULL DEFAULT 0,
     error_in_start_codon BOOLEAN NOT NULL DEFAULT 0,
     error_in_end_codon BOOLEAN NOT NULL DEFAULT 0,
-    error_in_intron BOOLEAN NOT NULL DEFAULT 0,
-    error_in_coding_exon BOOLEAN NOT NULL DEFAULT 0,
+    warning_in_intron BOOLEAN NOT NULL DEFAULT 0,
+    warning_in_coding_exon BOOLEAN NOT NULL DEFAULT 0,
     error_main BOOLEAN NOT NULL DEFAULT 0,
     error_comment TEXT
 );
@@ -225,8 +225,8 @@ create TABLE exons(
     prev_intron INT DEFAULT 0,
     next_intron INT DEFAULT 0,
 
-    error_in_pseudo_flag BOOLEAN NOT NULL DEFAULT 0,
-    error_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
+    warning_in_pseudo_flag BOOLEAN NOT NULL DEFAULT 0,
+    warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
 );
 
 create TABLE real_exons(
@@ -259,8 +259,8 @@ create TABLE introns(
     length_phase SMALLINT,
     phase SMALLINT,
 
-    error_start_dinucleotide BOOLEAN NOT NULL DEFAULT 0,
-    error_end_dinucleotide BOOLEAN NOT NULL DEFAULT 0,
+    warning_start_dinucleotide BOOLEAN NOT NULL DEFAULT 0,
+    warning_end_dinucleotide BOOLEAN NOT NULL DEFAULT 0,
     error_main BOOLEAN NOT NULL DEFAULT 0,
 
     warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
