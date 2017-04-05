@@ -666,9 +666,6 @@ void GbkParser::checkIsoformsMainErrors(SequencePtr seq)
 
 void GbkParser::checkIsoformError(IsoformPtr isoform){
     QByteArray full_exons("");
-    QByteArray taa("TAA");
-    QByteArray tag("TAG");
-    QByteArray tga("TGA");
 
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         full_exons += exon->origin;
@@ -677,16 +674,16 @@ void GbkParser::checkIsoformError(IsoformPtr isoform){
         if(full_exons[i]=='T'){
             if(full_exons[i+1]=='A'){
                 if((full_exons[i+2]=='A')||(full_exons[i+2]=='G')){
-                    qDebug() << "----------------";
-                    qDebug() << full_exons;
-                    qDebug() << "----------------";
+                    // qDebug() << "----------------";
+                    // qDebug() << full_exons;
+                    // qDebug() << "----------------";
                     isoform->errorMain = true;
                 }
             };
             if ((full_exons[i+1]=='G')&&(full_exons[i+2]=='A')){
-                qDebug() << "----------------";
-                qDebug() << full_exons;
-                qDebug() << "----------------";
+                // qDebug() << "----------------";
+                // qDebug() << full_exons;
+                // qDebug() << "----------------";
                 isoform->errorMain = true;
             }  
         }
