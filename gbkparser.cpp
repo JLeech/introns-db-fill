@@ -675,9 +675,9 @@ void GbkParser::checkIsoformError(IsoformPtr isoform){
         full_exons += exon->origin;
     };
     if (full_exons.contains(taa) || full_exons.contains(tag) || full_exons.contains(tga)){
-        qDebug() << "CONTAINS!";
-        qDebug() << full_exons;
-        qDebug() << "-----------------";
+        // qDebug() << "CONTAINS!";
+        // qDebug() << full_exons;
+        // qDebug() << "-----------------";
         isoform->errorMain = true;
     }
 }

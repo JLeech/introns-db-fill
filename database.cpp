@@ -997,7 +997,7 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->exonsLength += exonLength;
     }
     isoform->errorInLength = 0 != (isoform->exonsLength % 3);
-    isoform->errorMain = isoform->errorMain || isoform->errorInLength;
+    // isoform->errorMain = isoform->errorMain || isoform->errorInLength;
 
     QSqlQuery query("", *_db);
     query.prepare("INSERT INTO isoforms("
