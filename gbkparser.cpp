@@ -539,8 +539,8 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
          exonIndex += increment)
     {
         int start = starts[exonIndex];
-        if (attrs.contains("translation")) {
-            start += attrs["translation"].toInt()-1;
+        if (attrs.contains("codon_start")) {
+            start += attrs["codon_start"].toInt()-1;
         }
         const int end = ends[exonIndex];
         ExonPtr exon(new Exon);
