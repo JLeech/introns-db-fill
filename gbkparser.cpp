@@ -393,7 +393,9 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         const QString & refSeqId = seq->refSeqId;
         const QString dbXref = attrs.contains("db_xref") ? attrs["db_xref"] : QString();
         const QString product = attrs.contains("product") ? attrs["product"] : QString();
-
+        if attrs.contains("codon_start"){
+            qDebug() << "HAS start";    
+        }
         if (! targetGene) {
             _db->addOrphanedCDS(seq->sourceFileName, _featureStartLineNo, _currentLineNo,
                                 refSeqId, dbXref, product);
@@ -512,8 +514,6 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
 
     }
 }
-
-
 
 void GbkParser::createIntronsAndExons(IsoformPtr isoform,
                                       bool rna, bool bw,
