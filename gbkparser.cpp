@@ -842,6 +842,7 @@ void GbkParser::parseRange(const QString &value,
 QMap<QString, QString> GbkParser::parseFeatureAttributes(const QString &value)
 {
     QRegExp rxAttr("/(\\S+)=\\\"(.+)\\\"");
+    QRegExp rxDigitAttr("/(\\S+)=(\\d+)");
     QRegExp rxFlags("/(\\S+)");
     rxAttr.setMinimal(true);
     QMap<QString,QString> result;
@@ -877,6 +878,19 @@ QMap<QString, QString> GbkParser::parseFeatureAttributes(const QString &value)
         if (!result.count(key)) {
             result[key] = "";
         }
+    }
+    pos = 0;
+    Q_FOREVER {
+        pos = rxDigitAttr.indexIn(value, pos);
+        if (-1 == pos) {
+            break;
+        }
+        else {
+            ++pos;
+        }
+        const QString key = rxDigitAttr.cap(1);
+        QString value = rxDigitAttr.cap(2);
+        result[key] = value.simplified();
     }
     return result;
 }
