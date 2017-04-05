@@ -119,10 +119,10 @@ SequencePtr GbkParser::readSequence()
     }
     if (seq->genes.isEmpty() && seq->description.isEmpty()) {
         seq.clear();
-    }
-    else {
+    }else {
         makeRealExons(seq);
         fillIntronsAndExonsFromOrigin(seq);
+        checkIsoformsMainErrors(seq);
     }
 
     return seq;
@@ -655,15 +655,39 @@ void GbkParser::fillIntronsAndExonsFromOrigin(SequencePtr seq)
     }
 }
 
- bool exonLessThan(const ExonPtr v1, const ExonPtr v2)
- {
-    if (v1->start < v2->start) return true;
-    if (v1->start > v2->start) return false;
+void GbkParser::checkIsoformsMainErrors(SequencePtr seq)
+{
+    const QByteArray & origin = seq->origin;
+    Q_FOREACH(GenePtr gene, seq->genes) {
+        Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
+            checkIsoformError(isoform);
+        }
+    }
+}
 
-    if (v1->end < v2->end) return true;
-    if (v1->end > v2->end) return false;
-    return true;
- }
+void GbkParser::checkIsoformError(IsoformPtr isoform){
+    QByteArray full_exons("");
+    QByteArray taa("TAA");
+    QByteArray tag("TAG");
+    QByteArray tga("TGA");
+
+    Q_FOREACH(ExonPtr exon, isoform->exons) {
+        full_exons += exon->origin;
+    };
+    if (full_exons.contains(taa) || full_exons.contains(tag) || full_exons.contains(tga)){
+        qDebug() << "CONTAINS!";
+        isoform->errorMain = true;
+    }
+}
+
+bool exonLessThan(const ExonPtr v1, const ExonPtr v2)
+{
+   if (v1->start < v2->start) return true;
+   if (v1->start > v2->start) return false;
+   if (v1->end < v2->end) return true;
+   if (v1->end > v2->end) return false;
+   return true;
+}
 
 void GbkParser::makeRealExons(SequencePtr seq)
 {
