@@ -657,7 +657,6 @@ void GbkParser::fillIntronsAndExonsFromOrigin(SequencePtr seq)
 
 void GbkParser::checkIsoformsMainErrors(SequencePtr seq)
 {
-    const QByteArray & origin = seq->origin;
     Q_FOREACH(GenePtr gene, seq->genes) {
         Q_FOREACH(IsoformPtr isoform, gene->isoforms) {
             checkIsoformError(isoform);
@@ -675,7 +674,9 @@ void GbkParser::checkIsoformError(IsoformPtr isoform){
         full_exons += exon->origin;
     };
     for(int i=0; i<full_exons.size(); i+=3){
-        break if (i+3 >= full_exons.size());
+        if (i+3 >= full_exons.size()){
+            break;
+        };
         if(full_exons[i]=='T'){
             if(full_exons[i+1]=='A'){
                 if((full_exons[i+2]=='A')||(full_exons[i+2]=='G')){
