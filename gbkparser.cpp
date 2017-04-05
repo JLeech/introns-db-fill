@@ -500,14 +500,15 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
     }
 
     if ("CDS" == prefix) {
-        qDebug() << attrs.keys();
-        if (attrs.contains("codon_start")){
-            qDebug() << attrs["codon_start"];
-        };
+        // qDebug() << attrs.keys();
+        // if (attrs.contains("codon_start")){
+        //     qDebug() << attrs["codon_start"];
+        // };
         createIntronsAndExons(targetIsoform,
                               false,
                               bw,
-                              starts, ends);
+                              starts, ends,
+                              attrs);
 
         if (attrs.contains("translation")) {
             targetIsoform->translation = attrs["translation"];
@@ -519,7 +520,8 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
 void GbkParser::createIntronsAndExons(IsoformPtr isoform,
                                       bool rna, bool bw,
                                       const QList<quint32> &starts,
-                                      const QList<quint32> ends)
+                                      const QList<quint32> ends,
+                                      const QMap<QString,QString> attrs)
 {
     Q_ASSERT(starts.size() == ends.size());
     if (starts.size() == 0) {
@@ -536,7 +538,10 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
          exonIndex != endIndex;
          exonIndex += increment)
     {
-        const int start = starts[exonIndex];
+        int start = starts[exonIndex];
+        if (attrs.contains("translation")) {
+            start += attrs["translation"].toInt();
+        }
         const int end = ends[exonIndex];
         ExonPtr exon(new Exon);
         exon->start = start;

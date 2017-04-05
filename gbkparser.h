@@ -43,7 +43,8 @@ private:
 
     void createIntronsAndExons(IsoformPtr isoform, bool rna, bool bw,
                                const QList<quint32> & starts,
-                               const QList<quint32> ends);
+                               const QList<quint32> ends,
+                               const QMap<QString,QString> attrs);
     void checkIsoformsMainErrors(SequencePtr seq);
     void checkIsoformError(IsoformPtr isoform);
 
