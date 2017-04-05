@@ -395,7 +395,7 @@ void GbkParser::parseCdsOrRna(const QString & prefix,
         const QString product = attrs.contains("product") ? attrs["product"] : QString();
         if (attrs.contains("codon_start")){
             qDebug() << "HAS start";    
-        }
+        };
         if (! targetGene) {
             _db->addOrphanedCDS(seq->sourceFileName, _featureStartLineNo, _currentLineNo,
                                 refSeqId, dbXref, product);
