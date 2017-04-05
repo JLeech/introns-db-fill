@@ -673,10 +673,7 @@ void GbkParser::checkIsoformError(IsoformPtr isoform){
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         full_exons += exon->origin;
     };
-    for(int i=0; i<full_exons.size(); i+=3){
-        if (i+3 >= full_exons.size()){
-            break;
-        };
+    for(int i=0; i+5<full_exons.size(); i+=3){
         if(full_exons[i]=='T'){
             if(full_exons[i+1]=='A'){
                 if((full_exons[i+2]=='A')||(full_exons[i+2]=='G')){
