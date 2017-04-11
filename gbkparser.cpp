@@ -543,7 +543,7 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
             start += attrs["codon_start"].toInt()-1;
         }
         const int end = ends[exonIndex];
-        if ((start - end) < 0 ){
+        if ((start - end) > 0 ){
             qDebug() << "ST: " << starts;
             qDebug() << "ED: " << ends;
         };
