@@ -549,6 +549,7 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
             exon->lengthPhase = 0;
             phase = exon->endPhase = 0;
             exon->startPhase = 0;
+            exon->stash = true;
         }else{
             exon->start = start;
             exon->lengthPhase = (exon->end - exon->start + 1) % 3;

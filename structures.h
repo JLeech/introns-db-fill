@@ -258,6 +258,7 @@ struct Exon {
     IntronWPtr      prevIntron;
     IntronWPtr      nextIntron;
     QByteArray      origin;
+    bool            stash = false;
 
     bool            warningInPseudoFlag = false;
     bool            warningNInSequence = false;
