@@ -1116,9 +1116,12 @@ void Database::addCodingExon(ExonPtr exon)
     const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
     const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
     const qint32 isoformId = exon->isoform.toStrongRef()->id;
-    if ( exon->start > exon->end ){
-        exon->stash = true;
-    }
+    // if ( exon->start > exon->end ){
+    //     exon->start = exon->end;
+    //     exon->startCodon = "";
+    //     exon->endCodon = "";
+    //     exon->lengthPhase = 0;
+    // }
     QSqlQuery query("", *_db);
     query.prepare("INSERT INTO exons("
                   "id_isoforms"
@@ -1155,7 +1158,6 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
-                  ", :stash"
                   ", :warning_in_pseudo_flag"
                   ", :warning_n_in_sequence"
                   ")");
@@ -1165,7 +1167,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":real_exon_id", exon->real_exon_id);
     query.bindValue(":startt", exon->start);
     query.bindValue(":endd", exon->end);
-    query.bindValue(":lengthh", exon->stash ? 0 : (exon->end - exon->start + 1));
+    query.bindValue(":lengthh", (((exon->start - exon->end)) == 0) ? 0 : (exon->end - exon->start + 1));
     query.bindValue(":typee", qint16(exon->type));
     query.bindValue(":start_phase", exon->startPhase);
     query.bindValue(":end_phase", exon->endPhase);
@@ -1174,7 +1176,6 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":rev_index", exon->revIndex);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
-    query.bindValue(":stash", exon->stash);
     query.bindValue(":warning_in_pseudo_flag", exon->warningInPseudoFlag);
     query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
 

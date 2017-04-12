@@ -544,13 +544,22 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
         }
         const int end = ends[exonIndex];
         ExonPtr exon(new Exon);
-        exon->start = start;
+        if (start > end){
+            exon->start = end;
+            exon->lengthPhase = 0;
+            phase = exon->endPhase = 0;
+            exon->startPhase = 0;
+        }else{
+            exon->start = start;
+            exon->lengthPhase = (exon->end - exon->start + 1) % 3;
+            phase = exon->endPhase = (phase + end - start + 1) % 3;
+            exon->startPhase = phase;
+        }
+        
         exon->end = end;
         exon->isoform = isoform;
         exon->gene = isoform->gene;
         exon->sequence = isoform->sequence;
-        exon->startPhase = phase;
-        phase = exon->endPhase = (phase + end - start + 1) % 3;
         isoform->exons.push_back(exon);
     }
 

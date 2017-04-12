@@ -221,7 +221,6 @@ create TABLE exons(
     rev_index INT,
     start_codon VARCHAR(3),
     end_codon VARCHAR(3),
-    stash BOOLEAN NOT NULL DEFAULT 0,
 
     prev_intron INT DEFAULT 0,
     next_intron INT DEFAULT 0,
