@@ -1137,7 +1137,6 @@ void Database::addCodingExon(ExonPtr exon)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
-                  ", stash"
                   ", warning_in_pseudo_flag"
                   ", warning_n_in_sequence"
                   ") VALUES("
