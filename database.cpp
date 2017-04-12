@@ -1181,6 +1181,11 @@ void Database::addCodingExon(ExonPtr exon)
     else {
         exon->id = query.lastInsertId().toInt();
     }
+
+    if(((exon->end - exon->start)==0) && (exon->indexx != 0) && (exon->rev_index != 0) ){
+        qDebug() <<  exon->prevIntron.toStrongRef()->prevExon.toStrongRef()->origin << "|" << exon->origin;
+    }
+
 }
 
 void Database::addIntron(IntronPtr intron)
