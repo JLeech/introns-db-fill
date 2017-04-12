@@ -1187,9 +1187,9 @@ void Database::addCodingExon(ExonPtr exon)
         exon->id = query.lastInsertId().toInt();
     }
 
-    if(((exon->end - exon->start)==0) && (exon->index != 0) && (exon->revIndex != 0) ){
-        qDebug() << exon->prevIntron.toStrongRef()->prevExon.toStrongRef()->id << " | " << exon->id;
-        qDebug() << exon->prevIntron.toStrongRef()->prevExon.toStrongRef()->origin << " | " << exon->origin;
+    if(((exon->end - exon->start)==0) && (exon->index == 0)){
+        qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->id << " | " << exon->id;
+        qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin << " | " << exon->origin;
     }
 
 }
