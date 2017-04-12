@@ -1189,7 +1189,7 @@ void Database::addCodingExon(ExonPtr exon)
 
     if(((exon->end - exon->start)==0) && (exon->index == 0)){
         qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->id << " | " << exon->id;
-        qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin << " | " << exon->origin;
+        qDebug() << exon->origin << " | " <<  exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin;
     }
 
 }
