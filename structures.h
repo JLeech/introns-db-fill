@@ -261,6 +261,7 @@ struct Exon {
 
     bool            warningInPseudoFlag = false;
     bool            warningNInSequence = false;
+    bool            stash = false;
 };
 
 

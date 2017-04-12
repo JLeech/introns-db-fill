@@ -1116,10 +1116,8 @@ void Database::addCodingExon(ExonPtr exon)
     const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
     const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
     const qint32 isoformId = exon->isoform.toStrongRef()->id;
-    if ((exon->end - exon->start) > 20000 ){
-        qDebug() << exon->end << " - " << exon->start << " = " << (exon->end - exon->start);
-        qDebug() << seqId;
-        qDebug() << geneId;
+    if ( exon->start > exon->end ){
+        exon->stash = true;
     }
     QSqlQuery query("", *_db);
     query.prepare("INSERT INTO exons("
@@ -1138,6 +1136,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
+                  ", stash"
                   ", warning_in_pseudo_flag"
                   ", warning_n_in_sequence"
                   ") VALUES("
@@ -1156,6 +1155,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
+                  ", :stash"
                   ", :warning_in_pseudo_flag"
                   ", :warning_n_in_sequence"
                   ")");
@@ -1165,7 +1165,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":real_exon_id", exon->real_exon_id);
     query.bindValue(":startt", exon->start);
     query.bindValue(":endd", exon->end);
-    query.bindValue(":lengthh", exon->end - exon->start + 1);
+    query.bindValue(":lengthh", exon->stash ? 0 : (exon->end - exon->start + 1));
     query.bindValue(":typee", qint16(exon->type));
     query.bindValue(":start_phase", exon->startPhase);
     query.bindValue(":end_phase", exon->endPhase);
@@ -1174,6 +1174,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":rev_index", exon->revIndex);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
+    query.bindValue(":stash", exon->stash);
     query.bindValue(":warning_in_pseudo_flag", exon->warningInPseudoFlag);
     query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
 
@@ -1187,10 +1188,10 @@ void Database::addCodingExon(ExonPtr exon)
         exon->id = query.lastInsertId().toInt();
     }
 
-    if(((exon->end - exon->start)==0) && (exon->index == 0)){
-        qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->id << " | " << exon->id;
-        qDebug() << exon->origin << " | " <<  exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin;
-    }
+    // if(((exon->end - exon->start)==0) && (exon->index == 0)){
+    //     qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->id << " | " << exon->id;
+    //     qDebug() << exon->origin << " | " <<  exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin;
+    // }
 
 }
 
