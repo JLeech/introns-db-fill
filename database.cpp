@@ -1116,6 +1116,11 @@ void Database::addCodingExon(ExonPtr exon)
     const qint32 seqId = exon->isoform.toStrongRef()->gene.toStrongRef()->sequence.toStrongRef()->id;
     const qint32 geneId = exon->isoform.toStrongRef()->gene.toStrongRef()->id;
     const qint32 isoformId = exon->isoform.toStrongRef()->id;
+    if ((exon->end - exon->start) > 20000 ){
+        qDebug() << exon->end << " - " << exon->start << " = " << (exon->end - exon->start);
+        qDebug() << seqId;
+        qDebug() << geneId;
+    }
     QSqlQuery query("", *_db);
     query.prepare("INSERT INTO exons("
                   "id_isoforms"
