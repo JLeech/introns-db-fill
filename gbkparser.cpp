@@ -579,10 +579,14 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
             }
             else if (isoform->exons.size()-1 == index) {
                 exon->type = Exon::Type::End;
+                if (exon->end == exon->start){
+                    isoform->errorMain = true;
+                }
             }
             else {
                 exon->type = Exon::Type::Inner;
             }
+
             if (index > 0) {
                 ExonPtr prevExon = isoform->exons[index-1];
                 IntronPtr intron(new Intron);
