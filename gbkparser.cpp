@@ -764,6 +764,7 @@ void GbkParser::makeRealExons(SequencePtr seq)
 void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
                                               const QByteArray &origin)
 {
+    qDebug() << "start parse iso:";
     qint32 start = qMin(isoform->cdsStart, isoform->mrnaStart);
     qint32 end = qMax(isoform->cdsEnd, isoform->mrnaEnd);
 
@@ -821,7 +822,7 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         }
         intron->warningNInSequence = intron->origin.contains('N');
     }
-
+    qDebug() << "finish parse iso:";
 }
 
 void GbkParser::parseRange(const QString &value,
