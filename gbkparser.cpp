@@ -298,9 +298,12 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
         _state = State::Origin;
     }
     else if ("gene" == prefix) {
+        qDebug() < "in gene";
         seq->genes.append(parseGene(value, seq));
+        qDebug() < "out gene";
     }
     else if ("source" == prefix) {
+        qDebug() < "in source";
         const auto attrs = parseFeatureAttributes(value);
         if (attrs.contains("organelle")) {
             seq->organism.toStrongRef()->dbMitochondria =
@@ -320,6 +323,7 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                         seq->organism.toStrongRef()
                     );
         }
+        qDebug() << "in source";
         else if (attrs.contains("organelle") && "mitochondrion" == attrs["organelle"]) {
             seq->chromosome =
                     _db->findOrCreateChromosome("mitochondrion",
@@ -338,9 +342,12 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                                                 seq->organism.toStrongRef());
 
         }
+        qDebug() < "out source";
     }
     else if ("CDS" == prefix || prefix.endsWith("RNA")) {
+        qDebug() < "in cds/rna";
         parseCdsOrRna(prefix, value, seq);
+        qDebug() < "out cds/rna";
     }
 }
 
