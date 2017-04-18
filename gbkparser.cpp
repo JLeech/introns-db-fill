@@ -769,7 +769,9 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
     qDebug() << origin.length();
     qint32 start = qMin(isoform->cdsStart, isoform->mrnaStart);
     qint32 end = qMax(isoform->cdsEnd, isoform->mrnaEnd);
-    
+        
+    qDebug() << start << " : " << end;
+
     isoform->startCodon = origin.mid(start, 3);
     isoform->endCodon = origin.mid(end-4, 3);
 
