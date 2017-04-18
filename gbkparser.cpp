@@ -34,6 +34,7 @@ bool GbkParser::atEnd() const
 
 SequencePtr GbkParser::readSequence()
 {
+    qDebug() << "parsing sequence";
     _state = TopLevel;
     SequencePtr seq(new Sequence);
     seq->sourceFileName = _fileName;
@@ -97,7 +98,9 @@ SequencePtr GbkParser::readSequence()
             }
             else {
                 if (secondLevelName.length() > 0) {
+                    qDebug() << "start parsing second"
                     parseSecondLevel(secondLevelName, secondLevelValue, seq);
+                    qDebug() << "finish parsing second"
                 }
                 secondLevelName = prefix;
                 secondLevelValue = value;
@@ -120,9 +123,13 @@ SequencePtr GbkParser::readSequence()
     if (seq->genes.isEmpty() && seq->description.isEmpty()) {
         seq.clear();
     }else {
+        qDebug() << "making real";
         makeRealExons(seq);
+        qDebug() << "filling introns& exons";
         fillIntronsAndExonsFromOrigin(seq);
+        qDebug() << "check main error";
         checkIsoformsMainErrors(seq);
+        qDebug() << "finish checking";
     }
 
     return seq;

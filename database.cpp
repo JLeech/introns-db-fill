@@ -651,6 +651,8 @@ void Database::addSequence(SequencePtr sequence)
     if (sequence->chromosome) {
         ChromosomePtr chromosome = sequence->chromosome;
         chromosome->mutex.lock();
+        qDebug() << "seqLength: ";
+        qDebug() << sequence->length;
         chromosome->length += sequence->length;
         const QString chromosomeName = chromosome->name;
         chromosome->mutex.unlock();
