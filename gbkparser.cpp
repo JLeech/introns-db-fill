@@ -771,7 +771,11 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
     qint32 end = qMax(isoform->cdsEnd, isoform->mrnaEnd);
         
     // qDebug() << start << " : " << end;
-
+    if(end > origin.length()){
+        qWarning() << "Isoform out of sequence";
+        qWarning() << "File: " << isoform->sequence.toStrongRef()->sourceFileName;
+        qWarning() << "Prot: " << isoform->proteinXref;
+    }
     isoform->startCodon = origin.mid(start, 3);
     isoform->endCodon = origin.mid(end-4, 3);
 
