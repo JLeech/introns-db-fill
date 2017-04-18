@@ -34,7 +34,7 @@ bool GbkParser::atEnd() const
 
 SequencePtr GbkParser::readSequence()
 {
-    qDebug() << "parsing sequence";
+    // qDebug() << "parsing sequence";
     _state = TopLevel;
     SequencePtr seq(new Sequence);
     seq->sourceFileName = _fileName;
@@ -98,9 +98,9 @@ SequencePtr GbkParser::readSequence()
             }
             else {
                 if (secondLevelName.length() > 0) {
-                    qDebug() << "start parsing second";
+                    // qDebug() << "start parsing second";
                     parseSecondLevel(secondLevelName, secondLevelValue, seq);
-                    qDebug() << "finish parsing second";
+                    // qDebug() << "finish parsing second";
                 }
                 secondLevelName = prefix;
                 secondLevelValue = value;
@@ -123,13 +123,13 @@ SequencePtr GbkParser::readSequence()
     if (seq->genes.isEmpty() && seq->description.isEmpty()) {
         seq.clear();
     }else {
-        qDebug() << "making real";
+        // qDebug() << "making real";
         makeRealExons(seq);
-        qDebug() << "filling introns& exons";
+        // qDebug() << "filling introns& exons";
         fillIntronsAndExonsFromOrigin(seq);
-        qDebug() << "check main error";
+        // qDebug() << "check main error";
         checkIsoformsMainErrors(seq);
-        qDebug() << "finish checking";
+        // qDebug() << "finish checking";
     }
 
     return seq;
@@ -305,12 +305,12 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
         _state = State::Origin;
     }
     else if ("gene" == prefix) {
-        qDebug() << "in gene";
+        // qDebug() << "in gene";
         seq->genes.append(parseGene(value, seq));
-        qDebug() << "out gene";
+        // qDebug() << "out gene";
     }
     else if ("source" == prefix) {
-        qDebug() << "in source";
+        // qDebug() << "in source";
         const auto attrs = parseFeatureAttributes(value);
         if (attrs.contains("organelle")) {
             seq->organism.toStrongRef()->dbMitochondria =
@@ -347,12 +347,12 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                                                 seq->organism.toStrongRef());
 
         }
-        qDebug() << "out source";
+        // qDebug() << "out source";
     }
     else if ("CDS" == prefix || prefix.endsWith("RNA")) {
-        qDebug() << "in cds/rna";
+        // qDebug() << "in cds/rna";
         parseCdsOrRna(prefix, value, seq);
-        qDebug() << "out cds/rna";
+        // qDebug() << "out cds/rna";
     }
 }
 
@@ -764,13 +764,13 @@ void GbkParser::makeRealExons(SequencePtr seq)
 void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
                                               const QByteArray &origin)
 {
-    qDebug() << "start parse iso:";
-    qDebug() << "origin";
-    qDebug() << origin.length();
+    // qDebug() << "start parse iso:";
+    // qDebug() << "origin";
+    // qDebug() << origin.length();
     qint32 start = qMin(isoform->cdsStart, isoform->mrnaStart);
     qint32 end = qMax(isoform->cdsEnd, isoform->mrnaEnd);
         
-    qDebug() << start << " : " << end;
+    // qDebug() << start << " : " << end;
 
     isoform->startCodon = origin.mid(start, 3);
     isoform->endCodon = origin.mid(end-4, 3);
@@ -826,7 +826,7 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         }
         intron->warningNInSequence = intron->origin.contains('N');
     }
-    qDebug() << "finish parse iso:";
+    // qDebug() << "finish parse iso:";
 }
 
 void GbkParser::parseRange(const QString &value,
