@@ -98,9 +98,9 @@ SequencePtr GbkParser::readSequence()
             }
             else {
                 if (secondLevelName.length() > 0) {
-                    qDebug() << "start parsing second"
+                    qDebug() << "start parsing second";
                     parseSecondLevel(secondLevelName, secondLevelValue, seq);
-                    qDebug() << "finish parsing second"
+                    qDebug() << "finish parsing second";
                 }
                 secondLevelName = prefix;
                 secondLevelValue = value;
