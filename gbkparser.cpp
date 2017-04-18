@@ -322,9 +322,7 @@ void GbkParser::parseSecondLevel(const QString &prefix, QString value, SequenceP
                         attrs["chromosome"],
                         seq->organism.toStrongRef()
                     );
-        }
-        qDebug() << "in source";
-        else if (attrs.contains("organelle") && "mitochondrion" == attrs["organelle"]) {
+        }else if (attrs.contains("organelle") && "mitochondrion" == attrs["organelle"]) {
             seq->chromosome =
                     _db->findOrCreateChromosome("mitochondrion",
                                                 seq->organism.toStrongRef());
