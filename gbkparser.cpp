@@ -821,7 +821,6 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         intron->warningInStartDinucleotide = "GT" != intron->startDinucleotide;
         intron->warningInEndDinucleotide = "AG" != intron->endDinucleotide;
         intron->errorMain =
-                intron->errorMain ||
                 intron->warningInStartDinucleotide ||
                 intron->warningInEndDinucleotide;
         if (intron->errorMain) {

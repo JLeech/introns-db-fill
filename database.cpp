@@ -997,6 +997,18 @@ void Database::addIsoform(IsoformPtr isoform)
         isoform->exonsLength += exonLength;
     }
     isoform->errorInLength = 0 != (isoform->exonsLength % 3);
+    if (isoform->errorInLength){
+        isoform->errorMain = 1;
+    }
+    if (isoform->errorMain){
+        Q_FOREACH(ExonPtr exon, isoform->exons) {
+            exon->errorInIsoform = true;
+        };
+        Q_FOREACH(ExonPtr intron, isoform->introns) {
+            intron->errorInIsoform = true;
+        }
+    }
+
     // isoform->errorMain = isoform->errorMain || isoform->errorInLength;
 
     QSqlQuery query("", *_db);
@@ -1020,8 +1032,6 @@ void Database::addIsoform(IsoformPtr isoform)
                   ", maximum_by_introns"
                   ", has_no_exons"
                   ", error_in_length"
-                  ", error_in_start_codon"
-                  ", error_in_end_codon"
                   ", warning_in_intron"
                   ", warning_in_coding_exon"
                   ", error_main"
@@ -1045,8 +1055,6 @@ void Database::addIsoform(IsoformPtr isoform)
                   ", :maximum_by_introns"
                   ", :has_no_exons"
                   ", :error_in_length"
-                  ", :error_in_start_codon"
-                  ", :error_in_end_codon"
                   ", :warning_in_intron"
                   ", :warning_in_coding_exon"
                   ", :error_main"
@@ -1072,8 +1080,6 @@ void Database::addIsoform(IsoformPtr isoform)
     query.bindValue(":maximum_by_introns", isoform->isMaximumByIntrons);
     query.bindValue(":has_no_exons", (isoform->exons.length() == 0) );
     query.bindValue(":error_in_length", isoform->errorInLength);
-    query.bindValue(":error_in_start_codon", isoform->errorInStartCodon);
-    query.bindValue(":error_in_end_codon", isoform->errorInEndCodon);
     query.bindValue(":warning_in_intron", isoform->warningInIntron);
     query.bindValue(":warning_in_coding_exon", isoform->warningInCodingExon);
     query.bindValue(":error_main", isoform->errorMain);
@@ -1137,7 +1143,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
-                  ", warning_in_pseudo_flag"
+                  ", error_in_isoform"
                   ", warning_n_in_sequence"
                   ") VALUES("
                   ":id_isoforms"
@@ -1155,7 +1161,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
-                  ", :warning_in_pseudo_flag"
+                  ", :error_in_isoform"
                   ", :warning_n_in_sequence"
                   ")");
     query.bindValue(":id_isoforms", isoformId);
@@ -1173,7 +1179,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":rev_index", exon->revIndex);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
-    query.bindValue(":warning_in_pseudo_flag", exon->warningInPseudoFlag);
+    query.bindValue(":error_in_isoform", exon->errorInIsoform);
     query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
 
     if (!query.exec()) {
@@ -1185,7 +1191,6 @@ void Database::addCodingExon(ExonPtr exon)
     else {
         exon->id = query.lastInsertId().toInt();
     }
-
     // if(((exon->end - exon->start)==0) && (exon->index == 0)){
     //     qDebug() << exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->id << " | " << exon->id;
     //     qDebug() << exon->origin << " | " <<  exon->nextIntron.toStrongRef()->nextExon.toStrongRef()->origin;
@@ -1218,6 +1223,7 @@ void Database::addIntron(IntronPtr intron)
                   ", warning_start_dinucleotide"
                   ", warning_end_dinucleotide"
                   ", error_main"
+                  ", error_in_isoform"
                   ", warning_n_in_sequence"
                   ") VALUES("
                   ":id_isoforms"
@@ -1238,6 +1244,7 @@ void Database::addIntron(IntronPtr intron)
                   ", :warning_start_dinucleotide"
                   ", :warning_end_dinucleotide"
                   ", :error_main"
+                  ", :error_in_isoform"
                   ", :warning_n_in_sequence"
                   ")");
     query.bindValue(":id_isoforms", isoformId);
@@ -1260,6 +1267,7 @@ void Database::addIntron(IntronPtr intron)
     query.bindValue(":warning_start_dinucleotide", intron->warningInStartDinucleotide);
     query.bindValue(":warning_end_dinucleotide", intron->warningInEndDinucleotide);
     query.bindValue(":error_main", intron->errorMain);
+    query.bindValue(":error_in_isoform", intron->errorInIsoform);
     query.bindValue(":warning_n_in_sequence", intron->warningNInSequence);
 
 
