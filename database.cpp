@@ -1002,10 +1002,10 @@ void Database::addIsoform(IsoformPtr isoform)
     }
     if (isoform->errorMain){
         Q_FOREACH(ExonPtr exon, isoform->exons) {
-            exon->errorInIsoform = true;
+            exon->errorInIsoform = 1;
         };
         Q_FOREACH(IntronPtr intron, isoform->introns) {
-            intron->errorInIsoform = true;
+            intron->errorInIsoform = 1;
         }
     }
 

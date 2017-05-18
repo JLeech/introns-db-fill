@@ -645,10 +645,10 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
         if (quint32(iso->introns.size()) == gene->maxIntronsCount){
             iso->isMaximumByIntrons = gene->maxIntronsCount;
             Q_FOREACH(ExonPtr exon, iso->exons){
-                exon-> fromMainIsoform = true;
+                exon-> fromMainIsoform = 1;
             }
             Q_FOREACH(IntronPtr intron, iso->introns){
-                intron-> fromMainIsoform = true;
+                intron-> fromMainIsoform = 1;
             }
         }
         
