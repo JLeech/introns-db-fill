@@ -256,6 +256,7 @@ struct Exon {
     IntronWPtr      prevIntron;
     IntronWPtr      nextIntron;
     QByteArray      origin;
+    bool            fromMainIsoform = false;
     bool            stash = false;
     bool            errorInIsoform = false;
     bool            warningNInSequence = false;
@@ -277,6 +278,7 @@ struct Intron {
     quint32         revIndex = 0;
     quint8          lengthPhase = 0;
     quint8          phase = 0;
+    bool            fromMainIsoform = false;
     bool            warningInStartDinucleotide = false;
     bool            warningInEndDinucleotide = false;
     bool            warningNInSequence = false;

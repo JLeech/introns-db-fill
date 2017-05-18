@@ -1143,6 +1143,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", rev_index"
                   ", start_codon"
                   ", end_codon"
+                  ", from_main_isoform"
                   ", error_in_isoform"
                   ", warning_n_in_sequence"
                   ") VALUES("
@@ -1161,6 +1162,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :rev_index"
                   ", :start_codon"
                   ", :end_codon"
+                  ", :from_main_isoform"
                   ", :error_in_isoform"
                   ", :warning_n_in_sequence"
                   ")");
@@ -1179,6 +1181,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":rev_index", exon->revIndex);
     query.bindValue(":start_codon", exon->startCodon);
     query.bindValue(":end_codon", exon->endCodon);
+    query.bindValue(":from_main_isoform", exon->fromMainIsoform);
     query.bindValue(":error_in_isoform", exon->errorInIsoform);
     query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
 
@@ -1220,6 +1223,7 @@ void Database::addIntron(IntronPtr intron)
                   ", rev_index"
                   ", length_phase"
                   ", phase"
+                  ", from_main_isoform"
                   ", warning_start_dinucleotide"
                   ", warning_end_dinucleotide"
                   ", error_main"
@@ -1241,6 +1245,7 @@ void Database::addIntron(IntronPtr intron)
                   ", :rev_index"
                   ", :length_phase"
                   ", :phase"
+                  ", :from_main_isoform"
                   ", :warning_start_dinucleotide"
                   ", :warning_end_dinucleotide"
                   ", :error_main"
@@ -1264,6 +1269,7 @@ void Database::addIntron(IntronPtr intron)
     query.bindValue(":rev_index", UINT32_MAX == intron->revIndex ? 0 : intron->revIndex);
     query.bindValue(":length_phase", intron->lengthPhase);
     query.bindValue(":phase", intron->phase);
+    query.bindValue(":from_main_isoform", intron->fromMainIsoform);
     query.bindValue(":warning_start_dinucleotide", intron->warningInStartDinucleotide);
     query.bindValue(":warning_end_dinucleotide", intron->warningInEndDinucleotide);
     query.bindValue(":error_main", intron->errorMain);

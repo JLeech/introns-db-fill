@@ -223,6 +223,7 @@ create TABLE exons(
     prev_intron INT DEFAULT 0,
     next_intron INT DEFAULT 0,
 
+    from_main_isoform BOOLEAN NOT NULL DEFAULT 0,
     error_in_isoform BOOLEAN NOT NULL DEFAULT 0,
     warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
 );
@@ -256,6 +257,8 @@ create TABLE introns(
     rev_index INT,
     length_phase SMALLINT,
     phase SMALLINT,
+    
+    from_main_isoform BOOLEAN NOT NULL DEFAULT 0,
 
     warning_start_dinucleotide BOOLEAN NOT NULL DEFAULT 0,
     warning_end_dinucleotide BOOLEAN NOT NULL DEFAULT 0,

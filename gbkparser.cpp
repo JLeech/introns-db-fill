@@ -642,9 +642,19 @@ void GbkParser::createIntronsAndExons(IsoformPtr isoform,
     }
 
     Q_FOREACH(IsoformPtr iso, gene->isoforms) {
-        iso->isMaximumByIntrons =
-                quint32(iso->introns.size()) == gene->maxIntronsCount;
+        if (quint32(iso->introns.size()) == gene->maxIntronsCount){
+            iso->isMaximumByIntrons = gene->maxIntronsCount;
+            Q_FOREACH(ExonPtr exon, iso->exons){
+                exon-> fromMainIsoform = true;
+            }
+            Q_FOREACH(IntronPtr intron, iso->introns){
+                intron-> fromMainIsoform = true;
+            }
+        }
+        
+                
     }
+
 }
 
 QByteArray GbkParser::dnaReverseComplement(const QByteArray &origin,
