@@ -171,6 +171,7 @@ void Worker::processOneFile()
     }
 
     if (inputSource) {
+        qDebug() << "ok";
         QSharedPointer<GbkParser> parser(new GbkParser);
         QSharedPointer<IniParser> supplParser(new IniParser);
         QSharedPointer<Database> db(Database::open(
