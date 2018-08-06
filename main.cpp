@@ -12,7 +12,7 @@
 #include <QSharedPointer>
 #include <QString>
 #include <QThread>
-
+#include <QSqlQuery>
 
 struct Arguments {
     QString databaseHost;  // --host=...
@@ -182,6 +182,7 @@ void Worker::processOneFile()
                                         _args.sequencesDir,
                                         _args.translationsDir
                                         ));
+        qDebug() << "database opened";
         parser->setDatabase(db);
         parser->setSource(inputSource, inputFileName);
         QString supplFileName = _args.extraDataFile;
@@ -199,12 +200,14 @@ void Worker::processOneFile()
                         supplParser->value("organisms", "name").toString()
                         );
         }
+        qDebug() << "start parsing";
         while (!parser->atEnd()) {
             SequencePtr seq = parser->readSequence();
             if (!seq) {
                 continue;
             }
             supplParser->updateOrganism(seq->organism);
+            qDebug() << "updateOrganism";
             supplParser->updateOrganismTaxonomy(seq->organism);
             db->storeOrigin(seq);
             db->addSequence(seq);

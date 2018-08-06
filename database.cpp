@@ -20,6 +20,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QThread>
+#include <typeinfo>
+#include <QSqlDriver>
 
 QMap<QString, OrganismPtr> Database::_organisms;
 QMutex Database::_organismsMutex;
@@ -41,7 +43,6 @@ QSharedPointer<Database> Database::open(const QString &host,
                                         const QString &translationsStoreDir)
 {
     QSharedPointer<Database> result(new Database);
-
     QMutexLocker lock(&_connectionsMutex);
     const Qt::HANDLE threadId = QThread::currentThreadId();
 
@@ -49,21 +50,17 @@ QSharedPointer<Database> Database::open(const QString &host,
         result->_db = &_connections[threadId];
     }
     else {
-        _connections[threadId] = QSqlDatabase::addDatabase(
-                    "QMYSQL",
-                    QString("introns_db_fill_pid%1_thread%2")
-                    .arg(qApp->applicationPid())
-                    .arg(qint64(QThread::currentThreadId()))
-                    .toLatin1()
-                    );
-
+        _connections[threadId] = QSqlDatabase::addDatabase("QMYSQL");
         _connections[threadId].setHostName(host);
         _connections[threadId].setUserName(userName);
         _connections[threadId].setPassword(password);
         _connections[threadId].setDatabaseName(dbName);
         _connections[threadId].setConnectOptions("CLIENT_COMPRESS=1");
+        qDebug() << _connections[threadId].lastError();
+        qDebug() << QSqlDatabase::drivers();
         result->_db = &_connections[threadId];
     }
+    qDebug() << result->_db->databaseName();
     result->_sequencesStoreDir = QDir::root();
     result->_translationsStoreDir = QDir::root();
 
@@ -81,9 +78,9 @@ QSharedPointer<Database> Database::open(const QString &host,
     }
 
     if (!result->_db->open()) {
+        // qDebug() << "db not opened";
         result.clear();
     }
-
     return result;
 }
 
@@ -99,11 +96,14 @@ OrganismPtr Database::findOrCreateOrganism(const QString &name)
     if (organism) {
         return organism;
     }
-
+    
+    // qDebug() << "preparing query";
     QSqlQuery selectQuery("", *_db);
+    // qDebug() << "create query";
     selectQuery.prepare("SELECT * FROM organisms WHERE name=:name");
+    // qDebug() << "select prepared";
     selectQuery.bindValue(":name", name);
-
+    // qDebug() << "binding done";
     if (!selectQuery.exec()) {
         qWarning() << selectQuery.lastError();
         qWarning() << selectQuery.lastError().text();
