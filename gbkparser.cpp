@@ -7,17 +7,17 @@
 #include <QFileInfo>
 #include <QStringList>
 #include <QThread>
-#include <QSqlQuery>
+// #include <QSqlQuery>
 
-#include <QByteArray>
-#include <QCoreApplication>
-#include <QFile>
-#include <QSqlDatabase>
-#include <QSqlError>
-#include <QSqlField>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QThread>
+// #include <QByteArray>
+// #include <QCoreApplication>
+// #include <QFile>
+// #include <QSqlDatabase>
+// #include <QSqlError>
+// #include <QSqlField>
+// #include <QSqlQuery>
+// #include <QSqlRecord>
+// #include <QThread>
 
 void GbkParser::setSource(QIODevice *sourceStream, const QString &fileName)
 {
@@ -799,14 +799,14 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         qWarning() << "File: " << isoform->sequence.toStrongRef()->sourceFileName;
         qWarning() << "Prot: " << isoform->proteinXref;
     }
-    qDebug() << "==========ORIGIN============";
-    qDebug() << origin;
-    qDebug() << "==========/ORIGIN============";
+    // qDebug() << "==========ORIGIN============";
+    // qDebug() << origin;
+    // qDebug() << "==========/ORIGIN============";
     isoform->startCodon = origin.mid(start, 3);
     isoform->endCodon = origin.mid(end-4, 3);
     qDebug() << isoform->gene.toStrongRef()->name;
-    qDebug() << "Start: " << origin.mid(start, 3);
-    qDebug() << "End  : " << origin.mid(end-4, 3);
+    // qDebug() << "Start: " << origin.mid(start, 3);
+    // qDebug() << "End  : " << origin.mid(end-4, 3);
     bool bw = isoform->gene.toStrongRef()->backwardChain;
 
     const QByteArray isoformOrigin = bw
@@ -815,10 +815,10 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
 
     isoform->startCodon = isoformOrigin.left(3);
     isoform->endCodon = isoformOrigin.right(3);
-    qDebug() << "==========ISOFORM ORIGIN============";
-    qDebug() << "Start: " << start << " End: " << end;
-    qDebug() << isoformOrigin;
-    qDebug() << "==========/ISOFORM ORIGIN============";
+    // qDebug() << "==========ISOFORM ORIGIN============";
+    // qDebug() << "Start: " << start << " End: " << end;
+    // qDebug() << isoformOrigin;
+    // qDebug() << "==========/ISOFORM ORIGIN============";
 
     Q_FOREACH(ExonPtr exon, isoform->exons) {
         const qint32 exonStart = exon->start;
@@ -827,11 +827,11 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         exon->origin = bw
                 ? dnaReverseComplement(origin, exonStart, exonEnd)
                 : origin.mid(exonStart-1, exonEnd-exonStart+1);
-        qDebug() << "EXON : ";
-        qDebug() << "Start: " << exonStart << " End: " << exonEnd;
-        qDebug() << bw;
-        qDebug() << exon->origin;
-        qDebug() << "==================";
+        // qDebug() << "EXON : ";
+        // qDebug() << "Start: " << exonStart << " End: " << exonEnd;
+        // qDebug() << bw;
+        // qDebug() << exon->origin;
+        // qDebug() << "==================";
         exon->startCodon = exon->origin.left(3);
         exon->endCodon = exon->origin.right(3);
         exon->warningNInSequence = exon->origin.contains('N');
@@ -850,11 +850,11 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         intron->origin = bw
                 ? dnaReverseComplement(origin, intronStart, intronEnd)
                 : origin.mid(intronStart-1, intronEnd-intronStart+1);
-        qDebug() << "INTRON : ";
-        qDebug() << "Start: " << intronStart << " End: " << intronEnd;
-        qDebug() << bw;
-        qDebug() << intron->origin;
-        qDebug() << "==================";
+        // qDebug() << "INTRON : ";
+        // qDebug() << "Start: " << intronStart << " End: " << intronEnd;
+        // qDebug() << bw;
+        // qDebug() << intron->origin;
+        // qDebug() << "==================";
         intron->startDinucleotide = intron->origin.left(2);
         intron->endDinucleotide = intron->origin.right(2);
 
@@ -870,7 +870,6 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
         intron->warningNInSequence = intron->origin.contains('N');
     }
     // qDebug() << "finish parse iso:";
-    exit(0);
 }
 
 void GbkParser::parseRange(const QString &value,

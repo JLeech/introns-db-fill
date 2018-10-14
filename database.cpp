@@ -20,8 +20,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QThread>
-#include <typeinfo>
-#include <QSqlDriver>
+// #include <typeinfo>
+// #include <QSqlDriver>
 
 QMap<QString, OrganismPtr> Database::_organisms;
 QMutex Database::_organismsMutex;
@@ -50,7 +50,14 @@ QSharedPointer<Database> Database::open(const QString &host,
         result->_db = &_connections[threadId];
     }
     else {
-        _connections[threadId] = QSqlDatabase::addDatabase("QMYSQL");
+        _connections[threadId] = QSqlDatabase::addDatabase(
+                    "QMYSQL",
+                    QString("introns_db_fill_pid%1_thread%2")
+                    .arg(qApp->applicationPid())
+                    .arg(qint64(QThread::currentThreadId()))
+                    .toLatin1()
+                    );
+
         _connections[threadId].setHostName(host);
         _connections[threadId].setUserName(userName);
         _connections[threadId].setPassword(password);
@@ -64,6 +71,7 @@ QSharedPointer<Database> Database::open(const QString &host,
     result->_sequencesStoreDir = QDir::root();
     result->_translationsStoreDir = QDir::root();
 
+    
     if (sequencesStoreDir.length() > 0) {
         const QString absPath = QDir(sequencesStoreDir).absolutePath();
         if (QDir::root().mkpath(absPath)) {
@@ -1146,6 +1154,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", from_main_isoform"
                   ", error_in_isoform"
                   ", warning_n_in_sequence"
+                  ", origin"
                   ") VALUES("
                   ":id_isoforms"
                   ", :id_genes"
@@ -1165,6 +1174,7 @@ void Database::addCodingExon(ExonPtr exon)
                   ", :from_main_isoform"
                   ", :error_in_isoform"
                   ", :warning_n_in_sequence"
+                  ", :origin"
                   ")");
     query.bindValue(":id_isoforms", isoformId);
     query.bindValue(":id_genes", geneId);
@@ -1184,6 +1194,7 @@ void Database::addCodingExon(ExonPtr exon)
     query.bindValue(":from_main_isoform", exon->fromMainIsoform);
     query.bindValue(":error_in_isoform", exon->errorInIsoform);
     query.bindValue(":warning_n_in_sequence", exon->warningNInSequence);
+    query.bindValue(":origin", exon->origin);
 
     if (!query.exec()) {
         qWarning() << query.lastError();
@@ -1229,6 +1240,7 @@ void Database::addIntron(IntronPtr intron)
                   ", error_main"
                   ", error_in_isoform"
                   ", warning_n_in_sequence"
+                  ", origin"
                   ") VALUES("
                   ":id_isoforms"
                   ", :id_genes"
@@ -1251,6 +1263,7 @@ void Database::addIntron(IntronPtr intron)
                   ", :error_main"
                   ", :error_in_isoform"
                   ", :warning_n_in_sequence"
+                  ", :origin"
                   ")");
     query.bindValue(":id_isoforms", isoformId);
     query.bindValue(":id_genes", geneId);
@@ -1275,6 +1288,7 @@ void Database::addIntron(IntronPtr intron)
     query.bindValue(":error_main", intron->errorMain);
     query.bindValue(":error_in_isoform", intron->errorInIsoform);
     query.bindValue(":warning_n_in_sequence", intron->warningNInSequence);
+    query.bindValue(":origin", intron->origin);
 
 
     if (!query.exec()) {

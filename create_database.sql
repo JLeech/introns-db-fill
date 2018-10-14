@@ -225,7 +225,8 @@ create TABLE exons(
 
     from_main_isoform BOOLEAN NOT NULL DEFAULT 0,
     error_in_isoform BOOLEAN NOT NULL DEFAULT 0,
-    warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
+    warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0,
+    origin TEXT
 );
 
 create TABLE real_exons(
@@ -265,7 +266,8 @@ create TABLE introns(
     error_main BOOLEAN NOT NULL DEFAULT 0,
     error_in_isoform BOOLEAN NOT NULL DEFAULT 0,
 
-    warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0
+    warning_n_in_sequence BOOLEAN NOT NULL DEFAULT 0,
+    origin LONGTEXT
 );
 
 ALTER TABLE  introns AUTO_INCREMENT = 1;

@@ -12,7 +12,7 @@
 #include <QSharedPointer>
 #include <QString>
 #include <QThread>
-#include <QSqlQuery>
+// #include <QSqlQuery>
 
 struct Arguments {
     QString databaseHost;  // --host=...
@@ -99,6 +99,8 @@ Arguments parseArguments()
         result.maxThreads = qMin(QThread::idealThreadCount(), result.sourceFileNames.size());
         qWarning() << "Threads count not specified. " << result.maxThreads << " cores will be utilized.";
     }
+    
+    qDebug() << result.sourceFileNames;
     return result;
 }
 
