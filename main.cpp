@@ -209,7 +209,7 @@ void Worker::processOneFile()
                 continue;
             }
             supplParser->updateOrganism(seq->organism);
-            qDebug() << "updateOrganism";
+            // qDebug() << "updateOrganism";
             supplParser->updateOrganismTaxonomy(seq->organism);
             db->storeOrigin(seq);
             db->addSequence(seq);
@@ -264,6 +264,7 @@ int main(int argc, char *argv[])
     Logger::init(args.loggerFileName);
 
     const quint32 filesPerWorker = args.sourceFileNames.size() / args.maxThreads;
+
 
     QList<Worker*> pool;
 

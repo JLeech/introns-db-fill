@@ -45,7 +45,7 @@ bool GbkParser::atEnd() const
 
 SequencePtr GbkParser::readSequence()
 {
-    qDebug() << "parsing sequence";
+    // qDebug() << "parsing sequence";
     _state = TopLevel;
     SequencePtr seq(new Sequence);
     seq->sourceFileName = _fileName;
@@ -277,9 +277,8 @@ void GbkParser::parseTopLevel(const QString &prefix, QString value, SequencePtr 
         const QString name = _overrideOrganismName.isEmpty()
                 ? lines[0].trimmed()
                 : _overrideOrganismName;
-        qDebug() << "parse organism";
+        // qDebug() << "parse organism";
         seq->organism = _db->findOrCreateOrganism(name).toWeakRef();
-        qDebug() << "any organism?";
         if (seq->organism.toStrongRef()->taxonomyList.size() == 0) {
             for (int i=1; i<lines.size(); ++i) {
                 const QStringList words = lines[i].split(';', QString::SkipEmptyParts);
@@ -804,7 +803,7 @@ void GbkParser::fillIntronsAndExonsFromOrigin(IsoformPtr isoform,
     // qDebug() << "==========/ORIGIN============";
     isoform->startCodon = origin.mid(start, 3);
     isoform->endCodon = origin.mid(end-4, 3);
-    qDebug() << isoform->gene.toStrongRef()->name;
+    // qDebug() << isoform->gene.toStrongRef()->name;
     // qDebug() << "Start: " << origin.mid(start, 3);
     // qDebug() << "End  : " << origin.mid(end-4, 3);
     bool bw = isoform->gene.toStrongRef()->backwardChain;
